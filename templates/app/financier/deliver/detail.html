@@ -1,0 +1,170 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+    </div>
+    <h4 class="mb-3 ml-3">Nomi</h4>
+    <button type="button" class="btn btn-light m-3" data-toggle="modal" data-target="#exampleModal1">To'lov</button>
+    <!-- MODAL -->
+    <!-- MODAL filial qo'shish -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-5">
+                    <h3 class="text-center">Chiqim qilish</h3>
+                    <!-- kimdan -->
+                    <div class="form-group">
+                        <label>Chiqim turi</label>
+                        <select class="form-control form-control-lg">
+                            <option></option>
+                            <option>Realizatsiya un olingan tovar</option>
+                            <option>Xisob kitob</option>
+
+                        </select>
+                    </div>
+                    <!-- to'lov turi -->
+                    <div class="form-group">
+                        <label>Turi</label>
+                        <select class="form-control form-control-lg">
+                            <option></option>
+                            <option>Plastik</option>
+                            <option>Naqd</option>
+                            <option>Perecheslenya</option>
+
+                        </select>
+                    </div>
+                    <!-- qancha -->
+                    <div class="form-group">
+                        <label>qancha</label>
+                        <input type="number" class="form-control form-control-lg"/>
+                    </div>
+                    <!-- Manzili -->
+                    <div class="form-group">
+                        <label>Izoh</label>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="6" cols="5"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Yaratish -->
+                    <br>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-light btn-lg btn-block" data-dismiss="modal"
+                                aria-label="Close">Qo'shish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--close Modal To'lash qo'shsish -->
+    <!-- MODAL -->
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="form-group" style="display: flex; justify-content: flex-START;">
+                <div class="form-group mr-2">
+                    <!-- data -->
+                    <input type="text" class="form-control datepicker" placeholder="sana dan"/>
+                </div>
+                <div class="form-group mr-2">
+                    <!-- data -->
+                    <input type="text" class="form-control datepicker" placeholder="gacha"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="table-responsive">
+                <table class="table table-bordered table__th">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" class="first">Sana - vaqt</th>
+                        <th rowspan="2">Hujjat</th>
+                        <th colspan="2">Summa</th>
+                        <th rowspan="2">Izoh</th>
+                        <th colspan="2">Holati</th>
+                    </tr>
+                    <tr>
+                        <td class="first">So'mda</td>
+                        <td class="first">Do'llarda</td>
+                        <td class="first">So'mda</td>
+                        <td class="first">Do'llarda</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                        <td class="first">{{ product.created_at }}</td>
+                        <td class="first">{{ product.deliver.mfo }}</td>
+                        <td class="first">{{ product.deliver.summa_sum_arrival_price }}</td>
+                        <td class="first">5.000</td>
+                        <td class="first">lorem</td>
+                        <td class="first">5.000</td>
+                        <td class="first">50.000</td>
+                    </tr>
+                    {% endfor %}
+
+
+
+{#                    <tr>#}
+{#                        <td class="first">01.01.2021</td>#}
+{#                        <td class="first"></td>#}
+{#                        <td class="first">50.000.000</td>#}
+{#                        <td class="first">5.000</td>#}
+{#                        <td class="first">lorem</td>#}
+{#                        <td class="first">5.000</td>#}
+{#                        <td class="first">50.000</td>#}
+{#                    </tr>#}
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div style="display: flex; justify-content: flex-end;" class="mt-3">
+                <h5 class="mr-5" style="display: flex;">Holati:
+                    <div class="ml-4">
+                        <h5>-5.000.000 so'm</h5>
+                        <h5>-5.000 do'llar</h5>
+                    </div>
+                </h5>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+<script>
+		$('.datepicker').pickadate({
+			selectMonths: true,
+	        selectYears: true
+		}),
+		$('.timepicker').pickatime()
+	</script>
+	<script>
+		$(function () {
+			$('#date-time').bootstrapMaterialDatePicker({
+				format: 'YYYY-MM-DD HH:mm'
+			});
+			$('#date').bootstrapMaterialDatePicker({
+				time: false
+			});
+			$('#time').bootstrapMaterialDatePicker({
+				date: false,
+				format: 'HH:mm'
+			});
+		});
+	</script>
+{% endblock %}

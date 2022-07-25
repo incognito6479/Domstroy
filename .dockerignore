@@ -1,0 +1,8 @@
+# Git
+.git
+.gitignore
+.venv
+templates
+.pytest_cache
+.staticfiles
+venv

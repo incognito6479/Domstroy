@@ -1,0 +1,61 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Domstroy | {% block title %}{% endblock %}</title>
+    {% if request.user.is_authenticated %}
+        {% if request.user.role == 'provider' %}
+            {% include 'app/assets/provider/links.html' %}
+        {% else %}
+            {% include 'app/assets/director/links.html' %}
+        {% endif %}
+    {% else %}
+        <link rel="icon" href="{% static 'authentications/assets/images/favicon-32x32.png' %}" type="image/png"/>
+        <!-- loader-->
+        <link rel="stylesheet" href="{% static 'authentications/assets/css/pace.min.css' %}"/>
+        <script src="{% static 'authentications/assets/js/pace.min.js' %}"></script>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'authentications/assets/css/bootstrap.min.css' %}"/>
+        <!-- Icons CSS -->
+        <link rel="stylesheet" href="{% static 'authentications/assets/css/icons.css' %}"/>
+        <!-- App CSS -->
+        <link rel="stylesheet" href="{% static 'authentications/assets/css/app.css' %}"/>
+    {% endif %}
+    {% block css %}{% endblock %}
+</head>
+<body class="bg-theme bg-theme9">
+<div class="pace-activity"></div>
+<div class="wrapper">
+    {% if request.user.is_authenticated %}
+        {% include 'app/parts/sidebar-wrapper.html' %}
+        {% include 'app/parts/top-header.html' %}
+    {% endif %}
+    {% block login %}
+
+    {% endblock %}
+    {% if request.user.is_authenticated %}
+        <div class="page-wrapper">
+            <div class="page-content-wrapper">
+                <div class="page-content">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="overlay toggle-btn-mobile"></div>
+    <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+</div>
+
+{% if request.user.role == 'provider' %}
+    {% include 'app/assets/provider/scripts.html' %}
+{% else %}
+    {% include 'app/assets/director/scripts.html' %}
+{% endif %}
+
+{% block js %}{% endblock %}
+</body>
+</html>

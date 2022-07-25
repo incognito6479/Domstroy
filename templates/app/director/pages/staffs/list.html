@@ -1,0 +1,279 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Hodimlar{% endblock %}
+{% block css %}
+    <link href="{% static 'director/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'director/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <style>
+        .hodimChiqarish {
+            width: 20px;
+            height: 20px;
+            background: #ac0;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+
+        .ChiqarishPass {
+            width: 20px;
+            height: 20px;
+            background: #aa0000;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+
+    <h3>Hodimlar ro'yhati</h3>
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="card-title">
+                <h4 class="mb-0">Filiallar</h4>
+            </div>
+            <hr/>
+            <div class="form-group">
+                <select id="hodimlarFilialTanlash" class="form-control">
+                    <option selected value>Hamma xodimlar ro’yhati</option>
+                    {% for branch in branches %}
+                        <option value="{{ branch.name }}">{{ branch.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div id="hodimlarRoyhatiTableHammasi" class="card">
+        <div class="card-body">
+            <!-- table 1 -->
+            <div class="table-responsive">
+                <table id="exampleHodimRoyhatHammasi" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Ismi</th>
+                        <th>Familiyasi</th>
+                        <th>Otasini ismi</th>
+                        <th>Filial nomi</th>
+                        <th>Lavozimi</th>
+                        <th>Tel raqami</th>
+                        {% if request.user.is_superuser %}
+                            <th>Taxrirlash</th>
+                            <th>Aktive/Deactive</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for staff in staffs %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="#">{{ staff.first_name }}</a></td>
+                            <td>{{ staff.last_name }}</td>
+                            <td>{{ staff.fathers_name }}</td>
+                            <td>{{ staff.branch.name }}</td>
+                            <td>{{ staff.role }}</td>
+                            <td>{{ staff.phone }}</td>
+                            {% if request.user.is_superuser %}
+                                <td>
+                                    <button type="button" class="btn btn-light m-2" data-toggle="modal"
+                                            data-target="#exampleModalMalumot_{{ staff.id }}">Ma'lumotlarni o'zgartirish
+                                    </button>
+                                </td>
+                                <td style="display: flex; align-items: center;">
+                                    {% if staff.status == 'active' %}
+                                        <div class="hodimChiqarish"></div>
+                                    {% elif staff.status == 'inactive' %}
+                                        <div class="ChiqarishPass"></div>
+                                    {% else %}
+                                        Hodim statusi tanlanmagan
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <!-- cllose => table -->
+            </div>
+        </div>
+    </div>
+    <!-- close table 2 -->
+    <!-- modal parol -->
+    <div class="modal fade" id="exampleModalPArolTiklash" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-5">
+
+                    <h3 class="text-center">Parolni tiklash</h3>
+                    <!-- hodim ismi -->
+                    <div class="form-group">
+                        <label>Yangi parolni kiriting:</label>
+                        <input type="password" class="form-control form-control-lg "/>
+                    </div>
+                    <!-- Qoshish -->
+                    <br>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-light btn-lg btn-block" data-dismiss="modal"
+                                aria-label="Close">Qo'shish
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- close modal parol -->
+    <!-- modal chiqarish -->
+    <div class="modal fade" id="exampleModalChiqarish" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-5">
+
+                    <h3 class="text-center">Button</h3>
+                    <br>
+                    <div class="form-group">
+                        <button type="button" class="hodimChiqarishBtn btn btn-light btn-lg btn-block"
+                                data-dismiss="modal" aria-label="Close">Ha
+                        </button>
+                        <button type="button" class="btn btn-light btn-lg btn-block" data-dismiss="modal"
+                                aria-label="Close">Yo'q
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- close modal chiqarish -->
+    <!-- modal ma'lumotlarno o'zgartirish -->
+    {% for staff in staffs %}
+        <div class="modal fade" id="exampleModalMalumot_{{ staff.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body p-5">
+
+                        <h3 class="text-center">Hodimni o'zgartirish</h3>
+                        <br>
+                        <form action="{% url 'app_staff_update' pk=staff.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="first_name">Ismi</label>
+                                <input type="text" name="first_name" id="first_name"
+                                       class="form-control form-control-lg " value="{{ staff.first_name }}"/>
+                            </div>
+                            <div class="form-group">
+                                <label id="last_name">Fsmiliyasi</label>
+                                <input type="text" name="last_name" id="last_name" class="form-control form-control-lg "
+                                       value="{{ staff.last_name }}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="fathers_name">Otasini ismi</label>
+                                <input type="text" name="fathers_name" id="fathers_name"
+                                       class="form-control form-control-lg " value="{{ staff.fathers_name }}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Tel raqami</label>
+                                <input type="text" name="phone" id="phone" class="form-control form-control-lg "
+                                       value="{{ staff.phone }}"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="branch">Filial nomi</label>
+                                <div class="form-group">
+                                    <select class="form-control" id="branch" name="branch">
+                                        {% for branch in branches %}
+                                            {% if staff.branch %}
+                                                <option value="{{ branch.name }}"
+                                                        {% if branch.name == staff.branch.name %}
+                                                        selected{% endif %}>{{ branch.name }}</option>
+                                            {% else %}
+                                                <option value="{{ branch.name }}">{{ branch.name }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-light btn-lg btn-block">O'zgartirish</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'director/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            $('#example').DataTable();
+            var table = $('#exampleHodimRoyhat').DataTable({});
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            var table = $('#exampleHodimRoyhatHammasi').DataTable({
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            var selectVal = $('#hodimlarFilialTanlash').val()
+            $('#hodimlarFilialTanlash').on('change', function () {
+                table.search(this.value).draw();
+            });
+            table.search(selectVal).draw();
+        })
+    </script>
+
+    <script>
+        var hodimChiqarish = document.querySelector(".hodimChiqarish");
+        var hodimChiqarishBtn = document.querySelector(".hodimChiqarishBtn");
+        var hodimChiqarishIn = true;
+        hodimChiqarishBtn.addEventListener("click", () => {
+            if (hodimChiqarishIn === true) {
+                hodimChiqarish.classList.add("ChiqarishPass")
+                hodimChiqarishIn = !hodimChiqarishIn
+            } else {
+                hodimChiqarish.classList.remove("ChiqarishPass")
+                hodimChiqarishIn = !hodimChiqarishIn
+            }
+        })
+
+    </script>
+{% endblock %}

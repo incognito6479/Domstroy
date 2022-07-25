@@ -1,0 +1,187 @@
+{% extends 'app/base.html' %}
+
+{% block title %}Forma 2 shkaladagi y{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+				<!-- FILIAL TANLASH -->
+						<div class="card radius-15">
+							<div class="card-body">
+								<div class="card-title" >
+									<h4 class="mb-0">Filialni tanlash</h4>
+								</div>
+								<hr/>
+								<div class="form-group">
+									<select id="settingsLavozim" class="form-control">
+										<option value=""></option>
+										<option value="filial1">Fillial - 1</option>
+										<option value="filial2">Fillial - 2</option>
+										<option value="filial3">Fillial - 3</option>
+										<option value="filial4">Fillial - 4</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<!-- FILIAL TANLASH -->
+
+						<div class="card radius-15">
+							<div class="card-body">
+								<div class="card-title" >
+									<h4 class="mb-0">Date Time Pickers</h4>
+								</div>
+								<hr/>
+
+								<div class="form-group" style="display: flex; justify-content: flex-START;">
+
+									<div class="form-group mr-2">
+										<!-- data -->
+										<button type="button" class="btn btn-light">Kunlik</button>
+									</div>
+									<div class="form-group mr-2">
+										<!-- data -->
+										<button type="button" class="btn btn-light">Haftalik</button>
+									</div>
+									<div class="form-group mr-2">
+										<!-- data -->
+										<button type="button" class="btn btn-light">Oylik</button>
+									</div>
+									<div class="form-group mr-2">
+										<!-- data -->
+										<button type="button" class="btn btn-light">Yillik</button>
+									</div>
+									<div class="form-group mr-2">
+										<!-- data -->
+										<input type="text" class="form-control datepicker" placeholder="sana dan"/>
+									</div>
+									<div class="form-group mr-2">
+										<!-- data -->
+										<input type="text" class="form-control datepicker" placeholder="gacha"/>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					<div class="row">
+
+						<!--  -->
+						<div class="col-12 col-lg-2">
+							<div class="card radius-15">
+								<div class="card-body text-center radius-15" >
+									<h4 class="mb-0 font-weight-bold mt-3 text-white">Jami</h4>
+									<hr>
+									<h6 class="mb-0 text-white">2.300.300 so'm</h6>
+									<br>
+									<h6 class="mb-0 text-white">2.300 do'llar</h6>
+								</div>
+							</div>
+						</div>
+
+						<!--  -->
+						<div class="col-12 col-lg-2">
+							<div class="card radius-15">
+								<div class="card-body text-center radius-15" >
+									<h4 class="mb-0 font-weight-bold mt-3 text-white">Filial</h4>
+									<hr>
+									<h6 class="mb-0 text-white">2.300.300 so'm</h6>
+									<br>
+									<h6 class="mb-0 text-white">2.300 do'llar</h6>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!--end row-->
+					<!--  -->
+					<!--  -->
+					<!--  -->
+					<!--  -->
+					<!--  -->
+					<!--  -->
+					<!--  -->
+
+						<!-- tables -->
+						<div class="card radius-15">
+							<div class="card-body">
+								<div class="card-title">
+									<h4 class="mb-0">Hodimlaar ro'yxati</h4>
+								</div>
+								<hr/>
+								<div class="table-responsive">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">ism</th>
+												<th scope="col">Naqt</th>
+												<th scope="col">Nasiya</th>
+												<th scope="col">Plastik</th>
+												<th scope="col">Plastik</th>
+												<th scope="col">Plastik</th>
+												<th scope="col">Plastik</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row">1</th>
+												<td><a href='#'>mark</a></td>
+												<td>10.000</td>
+												<td>20.000</td>
+												<td>150.000</td>
+												<td>10.000</td>
+												<td>1.000</td>
+												<td>1.000</td>
+											</tr>
+											<tr>
+												<th scope="row">2</th>
+												<td><a href='#'>mark</a></td>
+												<td>10.000</td>
+												<td>20.000</td>
+												<td>150.000</td>
+												<td>10.000</td>
+												<td>1.000</td>
+												<td>1.000</td>
+											</tr>
+											<tr>
+												<th scope="row">2</th>
+												<td><a href='#'>mark</a></td>
+												<td>10.000</td>
+												<td>20.000</td>
+												<td>150.000</td>
+												<td>10.000</td>
+												<td>1.000</td>
+												<td>1.000</td>
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+{% endblock %}
+
+{% block js %}
+<script>
+		$('.datepicker').pickadate({
+			selectMonths: true,
+	        selectYears: true
+		}),
+		$('.timepicker').pickatime()
+	</script>
+	<script>
+		$(function () {
+			$('#date-time').bootstrapMaterialDatePicker({
+				format: 'YYYY-MM-DD HH:mm'
+			});
+			$('#date').bootstrapMaterialDatePicker({
+				time: false
+			});
+			$('#time').bootstrapMaterialDatePicker({
+				date: false,
+				format: 'HH:mm'
+			});
+		});
+	</script>
+{% endblock %}

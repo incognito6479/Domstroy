@@ -1,0 +1,173 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}{% endblock %}
+
+{% block css %}
+    <link href="{% static 'director/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'director/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+{% endblock %}
+
+{% block content %}
+
+    <!-- FILIAL TANLASH -->
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="" style="display: flex; align-items: center;">
+
+                <div style="display: flex; align-items: center;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a type="button" class="btn btn-outline-light"
+                           style="border: 1px solid rgb(255 255 255 / 35%);">Kunlik</a>
+                        <a type="button" class="btn btn-outline-light"
+                           style="border: 1px solid rgb(255 255 255 / 35%);">Haftalik</a>
+                        <a type="button" class="btn btn-outline-light"
+                           style="border: 1px solid rgb(255 255 255 / 35%);">Oylik</a>
+                        <a type="button" class="btn btn-outline-light"
+                           style="border: 1px solid rgb(255 255 255 / 35%);">Yillik</a>
+                    </div>
+
+                    <input placeholder="dan" type="text" class="form-control datepicker"
+                           style="background: none !important; margin-left: 5px; max-width: 130px; padding: 6px;"/>
+                    <input placeholder="gacha" type="text" class="form-control datepicker"
+                           style="background: none !important; margin-left: 5px; max-width: 130px; padding: 6px;"/>
+                    <div class="border-left ml-3 px-2 py-0">
+                        <div class="" style="display: flex;align-items: center">
+                            <div class="" >
+                                <h6 class="mb-0" style="position: relative;left:25px">Filiallar</h6>
+                            </div>
+                            <div class="form-group mx-5 mt-3">
+                                <select id="hodimlarFilialTanlash" style="font-size:15px" class="form-control">
+                                    <option selected value>Hamma filiallarni ro’yhati</option>
+                                    {% for branch in branches %}
+                                        {% if branch.type_of_branch == "b2b" %}
+                                            <option  value="{{ branch.name }}">{{ branch.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- tables -->
+{#    <div class="card radius-15">#}
+{#        <div class="card-body">#}
+{#            <div class="card-title">#}
+{#                <h4 class="mb-0">Filiallar</h4>#}
+{#            </div>#}
+{#            <hr/>#}
+{#            <div class="form-group">#}
+{#                <select id="hodimlarFilialTanlash" class="form-control">#}
+{#                    <option selected value>Hamma filiallarni ro’yhati</option>#}
+{#                    {% for branch in branches %}#}
+{#                        <option value="{{ branch.name }}">{{ branch.name }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="card-title">
+                <h4 class="mb-0">Hodimlaar ro'yxati</h4>
+            </div>
+            <hr/>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="example">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ism</th>
+                        <th scope="col">Filial</th>
+                        <th scope="col">Naqt</th>
+                        <th scope="col">Nasiya</th>
+                        <th scope="col">Dollar</th>
+                        <th scope="col">Plastik</th>
+                        <th scope="col">Perchesleniya</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for shop in shops %}
+                        {% if shop.branch.type_of_branch == "b2b" %}
+                            <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td><a href='#'>{{ shop.seller.first_name }} {{ shop.seller.last_name }}</a></td>
+                            <td>{{ shop.branch.name }}</td>
+                            <td>{{ shop.cash_sum|intcomma }}</td>
+                            <td>{{ shop.loan_sum|intcomma }}</td>
+                            <td>{{ shop.cash_dollar|intcomma }}</td>
+                            <td>{{ shop.card|intcomma }}</td>
+                            <td>{{ shop.transfer|intcomma }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'director/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            $('#example').DataTable({
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            var table = $('#exampleHodimRoyhat').DataTable({});
+        })
+    </script>
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true
+        })
+        $('.timepicker').pickatime()
+    </script>
+    <script>
+        $(function () {
+            $('#date-time').bootstrapMaterialDatePicker({
+                format: 'YYYY-MM-DD HH:mm'
+            });
+            $('#date').bootstrapMaterialDatePicker({
+                time: false
+            });
+            $('#time').bootstrapMaterialDatePicker({
+                date: false,
+                format: 'HH:mm'
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            var table = $('#example').DataTable();
+            var selectVal = $('#hodimlarFilialTanlash').val()
+            $('#hodimlarFilialTanlash').on('change', function () {
+                table.search(this.value).draw();
+            });
+            table.search(selectVal).draw();
+        })
+    </script>
+{% endblock %}

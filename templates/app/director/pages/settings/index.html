@@ -1,0 +1,308 @@
+{% extends 'app/base.html' %}
+{% load humanize %}
+{% block title %}Sozlamalar{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="text-center alert alert-{{ message.tags }}" id="alert_msg">
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!--end breadcrumb-->
+    <div class="card radius-15">
+        <div class="card-body">
+
+            <!-- Hodim qo'shish  -->
+            <div class="card-title">
+                <h4 class="mb-0">Hodim qoshish</h4>
+            </div>
+            <hr/>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-light m-2" data-toggle="modal" data-target="#exampleModal1">Hodim
+                qo'shish
+            </button>
+
+            <!-- Modal hodim qo'shish -->
+            <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom-0">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-5">
+
+                            <h3 class="text-center">Hodim qo'shish</h3>
+                            <!-- hodim ismi -->
+                            <form action="{% url 'settings' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="first_name">Ismi:</label>
+                                    <input type="text" id="first_name" name="first_name"
+                                           class="form-control form-control-lg " required/>
+                                </div>
+                                <!-- hodim fam -->
+                                <div class="form-group">
+                                    <label for="last_name">Familiyasi:</label>
+                                    <input type="text" name="last_name" id="last_name"
+                                           class="form-control form-control-lg " required/>
+                                </div>
+                                <!-- hodim otasini ismi -->
+                                <div class="form-group">
+                                    <label for="fathers_name">Otasini ismi:</label>
+                                    <input type="text" name="fathers_name" id="fathers_name"
+                                           class="form-control form-control-lg " required/>
+                                </div>
+
+                                <!-- Hodim lavaozimi -->
+                                <div class="form-group">
+                                    <label for="role">Lavozimi:</label>
+                                    <select id="role" class="form-control form-control-lg" name="role" required>
+
+                                        {% for x, y in staff_form.fields.role.choices %}
+                                            <option value="{{ x }}">{{ y }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- Hodim Filiali -->
+                                <div id='settingsFilial' class="form-group">
+                                    <label for="branch">Filial:</label>
+                                    <select id="branch" name="branch" class="form-control form-control-lg" required>
+                                        {% for x, y in staff_form.fields.branch.choices %}
+                                            <option value="{{ x }}">{{ y }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- Login -->
+                                <div class="form-group">
+                                    <label for="phone">Tel raqam</label>
+                                    <input type="number" name="phone" id="phone" class="form-control form-control-lg"
+                                           required/>
+                                </div>
+
+                                <!-- Salary -->
+                                <div class="form-group">
+                                    <label for="salary">Ish haqqi</label>
+                                    <input type="number" name="salary" id="salary" class="form-control form-control-lg "
+                                           required/>
+                                </div>
+                                <!-- Parol -->
+                                <div class="form-group">
+                                    <label for="password">Parol</label>
+                                    <input type="password" name="password" id="password"
+                                           class="form-control form-control-lg " required/>
+                                </div>
+
+                                <!-- Qoshish -->
+                                <br>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-light btn-lg btn-block">Qo'shish</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- close MODAL hodim qo'shish -->
+
+        </div>
+    </div>
+    <!-- close Hodim qo'shish  -->
+
+    <!-- Filial qo'shish -->
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="card-title">
+                <h4 class="mb-0">Filial yaratish</h4>
+            </div>
+            <hr/>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-light m-2" data-toggle="modal" data-target="#exampleModal2">Filial
+                yaratish
+            </button>
+
+            <!-- MODAL filial qo'shish -->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-bottom-0">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-5">
+                            <h3 class="text-center">Filial yaratish</h3>
+                            <!-- Nomi -->
+                            <form action="{% url 'app_branch_create' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="name">Nomi</label>
+                                    <input type="text" name="name" id="name" class="form-control form-control-lg"/>
+                                </div>
+                                <!-- Manzili -->
+                                <div class="form-group">
+                                    <label for="address">Manzili</label>
+                                    <input type="text" name="address" id="address"
+                                           class="form-control form-control-lg"/>
+                                </div>
+                                <!-- B2B B2C -->
+                                <div class="form-group">
+                                    <label for="type_of_branch">Turi</label>
+                                    <select id="type_of_branch" name="type_of_branch"
+                                            class="form-control form-control-lg">
+                                        {% for x, y in branch_form.fields.type_of_branch.choices %}
+                                            <option value="{{ x }}" id="{{ x }}">{{ y }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                {% comment %}
+                                <div id="cashbox"
+                                     style="display: none; justify-content: space-around; align-items: center;">
+
+
+                                    <div style="display: flex; align-items: center;">
+                                        <input type="checkbox" name="" id="cashbox_1"
+                                               style="width: 16px; height: 16px;">
+                                        <label for="cashbox_1"
+                                               style="cursor: pointer; font-size: 16px; margin:0 0 0 5px;">Sotuvchi
+                                            Kassa alohida</label>
+                                    </div>
+
+                                    <div style="display: flex; align-items: center;">
+                                        <input type="checkbox" name="" id="seller" style="width: 16px; height: 16px;">
+                                        <label for="seller"
+                                               style="cursor: pointer; font-size: 16px; margin:0 0 0 5px;">Sotuvchi
+                                            Kassa bitta</label>
+                                    </div>
+
+                                </div>
+
+                            {% endcomment %}
+                                {% comment %}<div id="section" style="display: none; justify-content: space-around; align-items: center;">
+
+
+                                    <div style="display: flex; align-items: center;">
+                                        <input type="checkbox" name="" id="many2one" style="width: 16px; height: 16px;">
+                                        <label for="many2one"
+                                               style="cursor: pointer; font-size: 16px; margin:0 0 0 5px;">Sotuvchi Kassa alohida</label>
+                                    </div>
+
+                                    <div style="display: flex; align-items: center;">
+                                        <input type="checkbox" name="" id="seller" style="width: 16px; height: 16px;">
+                                        <label for="seller"
+                                               style="cursor: pointer; font-size: 16px; margin:0 0 0 5px;">Sotuvchi Kassa bitta</label>
+                                    </div>
+
+                                </div>
+                                {% endcomment %}
+
+                                <!-- Yaratish -->
+                                <br>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-light btn-lg btn-block">Qo'shish</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--close Modal filial qo'shsish -->
+        </div>
+    </div>
+    <!-- close filial qo'shish -->
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#exampleVaryingModalContent').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        });
+    </script>
+    <!-- App JS -->
+    <script src="assets/js/app.js"></script>
+    <script>
+        var message_ele = document.getElementById("alert_msg");
+
+        setTimeout(function () {
+            message_ele.style.display = "none";
+        }, 3000);
+    </script>
+    <script>
+        $('select[id="type_of_branch"]').on('change', function (e) {
+            if (e.target.value === 'b2c') {
+                document.getElementById('cashbox').setAttribute("style", "display:flex")
+                document.getElementById('section').setAttribute("style", "display:flex")
+            } else {
+                document.getElementById('cashbox').setAttribute("style", "display:none")
+                document.getElementById('section').setAttribute("style", "display:none")
+            }
+        })
+    </script>
+    <script>
+        var settingsLavozim = document.querySelector("#settingsLavozim")
+        var settingsFilial = document.querySelector('#settingsFilial')
+        var settingsfilialcontent = `<label>Filiali</label>
+						<select class="form-control form-control-lg">
+							<option></option>
+							<option>filial1</option>
+							<option>filial2</option>
+							<option>filial3</option>
+							<option>filial4</option>
+						</select>`;
+
+        settingsLavozim.onclick = () => {
+            var settingsLavozim1 = document.querySelector("#settingsLavozim").value
+            if (settingsLavozim1 === 'kassir' || settingsLavozim1 === 'sotuvchi' || settingsLavozim1 === 'sotuvchikassir') {
+                settingsFilial.innerHTML = settingsfilialcontent;
+            } else {
+                settingsFilial.innerHTML = ""
+            }
+        }
+
+
+        var b2csavdo = document.querySelector('#b2csavdo')
+        var Sotuvturi = document.querySelector("#Sotuvturi")
+
+        var Maxsulot = document.querySelector('#Maxsulot')
+        var qoshishBtn = document.querySelector("#qoshishBtn")
+
+        Sotuvturi.onclick = () => {
+            var Sotuvturi1 = document.querySelector("#Sotuvturi").value
+            if (Sotuvturi1 === 'b2c') {
+                console.log('binasa')
+                b2csavdo.setAttribute("style", "display: block;")
+
+            } else {
+                b2csavdo.setAttribute("style", "display: none;")
+            }
+        }
+
+
+        qoshishBtn.onclick = () => {
+            var mahSon = document.querySelector("#mahSon").value
+            var mahSonYan = ""
+            for (var i = 1; i <= mahSon; i++) {
+                mahSonYan = mahSonYan + `<div class="form-group"> <label>${i}.</label> <input type="text" class="form-control form-control-lg" /> </div>`
+            }
+            Maxsulot.innerHTML = mahSonYan
+        }
+    </script>
+{% endblock %}

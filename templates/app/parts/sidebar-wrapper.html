@@ -1,0 +1,395 @@
+{% load static %}
+
+<div class="sidebar-wrapper" data-simplebar="true">
+
+    <div class="sidebar-header justify-content-center">
+        <div class="">
+            <img src="{% static 'provider/assets/images/logo-icon.png' %}" class="logo-icon"
+                 style="height: 48px; width: auto;" alt=""/>
+        </div>
+    </div>
+    {% comment %}   {% if request.user.role == 'provider' %}
+        <ul class="metismenu" id="menu1">
+            <li><a href="{% url 'director_home' %}"><i class="bx bx-home-alt"></i>Dashboard</a></li>
+
+            <li><a href="{% url 'rate_of_products' %}"><i class="fadeIn animated bx bx-trending-up"></i>Tavar
+                reytingi +</a></li>
+            <li><a href="{% url 'residual_goods' %}"><i class="fadeIn animated bx bx-table"></i>Qoldiq tovar +</a></li>
+            <li><a href="{% url 'analisis_of_goods_sold' %}"><i class="fadeIn animated bx bx-coin-stack"></i>Sotilgan
+                tovar bo'yicha analiz +</a></li>
+{#            <li><a href="{% url 'order' %}"><i class="fadeIn animated bx bx-cart"></i>Buyurtma Berish</a></li>#}
+            <li><a href="{% url 'report' %}"><i class="fadeIn animated bx bx-abacus"></i>Hisobot +</a></li>
+            <li><a href="{% url 'invoice' %}"><i class="fadeIn animated bx bx-list-ol"></i>Faktura +</a></li>
+        </ul>
+    {% else %}{% endcomment %}
+    {% if request.user.role == 'director' %}
+        <ul class="metismenu" id="menu">
+            <!-- Analytics -->
+            <li>
+                <a href="{% url 'director_home' %}">
+                    <div class="parent-icon"><i class="bx bx-home-alt"></i>
+                    </div>
+                    <div class="menu-title">Dashboard</div>
+                </a>
+            </li>
+            <!-- Marketing -->
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-box"></i>
+                    </div>
+                    <div class="menu-title">Marketing</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#"><i class="bx bx-right-arrow-alt"></i>CRM Dashboard</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- HR -->
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-bookmark-alt-plus"></i>
+                    </div>
+                    <div class="menu-title">HR</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#"><i class="bx bx-right-arrow-alt"></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'app_staff_list' %}"><i class="bx bx-right-arrow-alt"></i>Xodimlar ro’yxati</a>
+                    </li>
+
+                </ul>
+            </li>
+            <!-- Maxsulotlarni boshqarish -->
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-archive-in"></i>
+                    </div>
+                    <div class="menu-title">Maxsulotlarni boshqarish</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{% url 'app_product_list' %}"><i class="bx bx-right-arrow-alt"></i>B2B qoldig'i</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'app_product_b2c_list' %}"><i class="bx bx-right-arrow-alt"></i>B2C qoldig'i</a>
+                    </li>
+                    <li>
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+                            <div class="menu-title">Mijozdan qaytuvi</div>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{% url "get_back_from_the_customer_b2b" %}"><i
+                                        class="bx bx-right-arrow-alt"></i>B2B</a>
+                            </li>
+                            <li>
+                                <a href="{% url "get_back_from_the_customer_b2c" %}"><i
+                                        class="bx bx-right-arrow-alt"></i>B2C</a>
+                            </li>
+                        </ul>
+                    </li>
+                    </li>
+                    <li>
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+                            <div class="menu-title">Hisobdan chiqarish</div>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{% url "written_off_goods" %}"><i class="bx bx-right-arrow-alt"></i>B2B</a>
+                            </li>
+                            <li>
+                                <a href="{% url "written_off_goods" %}"><i class="bx bx-right-arrow-alt"></i>B2C</a>
+                            </li>
+                        </ul>
+                    </li>
+                    </li>
+                    <li>
+                    <li>
+                        <a class="has-arrow" href="javascript:;">
+                            <div class="menu-title">Taxlil va rejalashtirish</div>
+                        </a>
+
+                        <ul>
+                            <li>
+                                <a href="{% url "goods_movement_analysis" %}"><i
+                                        class="bx bx-right-arrow-alt"></i>B2B</a>
+                            </li>
+                            <li>
+                                <a href="{% url "goods_movement_analysis" %}"><i
+                                        class="bx bx-right-arrow-alt"></i>B2C</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+
+                    </li>
+
+                </ul>
+            </li>
+            <!-- Filiallar boshqaruvi  -->
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-bookmark-alt-plus"></i>
+                    </div>
+                    <div class="menu-title">Filiallar boshqaruvi</div>
+                </a>
+                <ul>
+
+                    {#                    <li>#}
+                    {#                        <a href="{% url 'app_branch_residue_list' %}"><i class="bx bx-right-arrow-alt"></i>Dashboard</a>#}
+                    {#                    </li>#}
+
+                    <li>
+                        {#                        <a href="{% url 'delivery_report' %}"><i class="bx bx-right-arrow-alt">#}
+                        {#                        </i>Postavshik hisobi</a>#}
+
+                        <a class="has-arrow" href="javascript:;">
+
+                            <div class="menu-title">Dashboard</div>
+                        </a>
+
+                        <ul>
+                            <li>
+                                <a href="{% url "app_branch_residue_list_b2b" %}"><i
+                                        class="bx bx-right-arrow-alt"></i>B2B</a>
+                            </li>
+                            <li>
+                                <a href="{% url "app_branch_residue_list_b2c" %}"><i
+                                        class="bx bx-right-arrow-alt"></i>B2C</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                </ul>
+            </li>
+            <!-- Moliya boshqaruvi -->
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-bookmark-alt-plus"></i>
+                    </div>
+                    <div class="menu-title">Moliya boshqaruvi</div>
+                </a>
+                <ul>
+                    <li>
+                        {#                        <a href="{% url 'delivery_report' %}"><i class="bx bx-right-arrow-alt">#}
+                        {#                        </i>Postavshik hisobi</a>#}
+
+                        <a class="has-arrow" href="javascript:;">
+
+                            <div class="menu-title">Postavshik hisobi</div>
+                        </a>
+
+                        <ul>
+                            <li>
+                                <a href="{% url "delivery_report_b2b" %}"><i class="bx bx-right-arrow-alt"></i>B2B</a>
+                            </li>
+                            <li>
+                                <a href="{% url "delivery_report_b2c" %}"><i class="bx bx-right-arrow-alt"></i>B2C</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                    {#                    <li>#}
+                    {#                        <a href="{% url 'customer_debt' %}"><i class="bx bx-right-arrow-alt"></i>Mijozlar#}
+                    {#                            qarzdorligi</a>#}
+                    {#                    </li>#}
+
+                    <li>
+
+
+                        <a class="has-arrow" href="javascript:;">
+
+                            <div class="menu-title">Mijozlar qarzdorligi</div>
+                        </a>
+
+                        <ul>
+                            <li>
+                                <a href="{% url "customer_debt_b2b" %}"><i class="bx bx-right-arrow-alt"></i>B2B</a>
+                            </li>
+                            <li>
+                                <a href="{% url "customer_debt_b2c" %}"><i class="bx bx-right-arrow-alt"></i>B2C</a>
+                            </li>
+                        </ul>
+
+                    </li>
+
+
+                    <li>
+                        <a href="{% url 'employee_salaries' %}"><i class="bx bx-right-arrow-alt"></i>Xodimlar ish xaqqi</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'the_final_financial_result' %}"><i class="bx bx-right-arrow-alt"></i>Korxona
+                            rentabillik </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Kassa -->
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-spa"></i>
+                    </div>
+                    <div class="menu-title">Kassa boshqaruvi</div>
+                </a>
+                <ul>
+                    <li><a href="{% url 'cashbox' %}"><i class="bx bx-right-arrow-alt"></i>Dashboard</a>
+                    </li>
+                    <li><a href="{% url 'income_account' %}"><i class="bx bx-right-arrow-alt"></i>Kirim xisobi</a>
+                    </li>
+                    <li><a href="{% url 'expense_account' %}"><i class="bx bx-right-arrow-alt"></i>Chiqim xisobi</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff_additional_salary' %}"><i class="bx bx-right-arrow-alt"></i>Ish xaqqi</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- Reviziya -->
+            <li>
+                <a href="{% url 'revision' %}">
+                    <div class="parent-icon"><i class="bx bx-home-alt"></i>
+                    </div>
+                    <div class="menu-title">Revizya</div>
+                </a>
+            </li>
+            {% comment %}      <!-- Hodimlar -->
+            <li>
+                <a href="{% url 'app_staff_list' %}">
+                    <div class="parent-icon"><i class="fadeIn animated bx bx-user"></i>
+                    </div>
+                    <div class="menu-title">Hodimlar +</div>
+                </a>
+            </li>{% endcomment %}
+            <!-- Sozlamalar -->
+            <li>
+                <a href="{% url 'settings' %}">
+                    <div class="parent-icon"><i class="bx bx-cog"></i>
+                    </div>
+                    <div class="menu-title">Sozlamalar</div>
+                </a>
+            </li>
+
+        </ul>
+    {% endif %}
+
+    {% if request.user.role == 'financier' %}
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="{% url 'delivery' %}">
+                    <div class="parent-icon"><i class="fadeIn animated bx bx-shopping-bag"></i>
+                    </div>
+                    <div class="menu-title">Mol yetkazib beruvchilar ro'yhati +</div>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'director_home' %}">
+                    <div class="parent-icon"><i class="bx bx-home-alt"></i>
+                    </div>
+                    <div class="menu-title">Dashboard</div>
+                </a>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-archive-in"></i>
+                    </div>
+                    <div class="menu-title">Maxsulotlarni boshqarish</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{% url 'app_product_list' %}"><i class="bx bx-right-arrow-alt"></i>B2B qoldig'i</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'app_product_b2c_list' %}"><i class="bx bx-right-arrow-alt"></i>B2C qoldig'i</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'get_back_from_the_customer_b2b' %}"><i class="bx bx-right-arrow-alt"></i>Mijozdan
+                            qaytuvi B2B</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'get_back_from_the_customer_b2b' %}"><i class="bx bx-right-arrow-alt"></i>Mijozdan
+                            qaytuvi B2C</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'written_off_goods' %}"><i class="bx bx-right-arrow-alt"></i>Hisobdan
+                            chiqarish B2B</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'get_back_from_the_customer2' %}"><i class="bx bx-right-arrow-alt"></i>Hisobdan
+                            chiqarish B2C</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'goods_movement_analysis' %}"><i class="bx bx-right-arrow-alt"></i>Taxlil va
+                            rejalashtrish B2B</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'get_back_from_the_customer3' %}"><i class="bx bx-right-arrow-alt"></i>Taxlil va
+                            rejalashtrish B2C</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-bookmark-alt-plus"></i>
+                    </div>
+                    <div class="menu-title">Filiallar boshqaruvi</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{% url 'app_branch_residue_list' %}"><i class="bx bx-right-arrow-alt"></i>Dashboard</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-bookmark-alt-plus"></i>
+                    </div>
+                    <div class="menu-title">Moliya boshqaruvi</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{% url 'delivery_report' %}"><i class="bx bx-right-arrow-alt"></i>Postavshik hisobi</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'customer_debt' %}"><i class="bx bx-right-arrow-alt"></i>Mijozlar
+                            qarzdorligi</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'employee_salaries' %}"><i class="bx bx-right-arrow-alt"></i>Xodimlar ish xaqqi</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'the_final_financial_result' %}"><i class="bx bx-right-arrow-alt"></i>Korxona
+                            rentabillik </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Kassa -->
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="bx bx-spa"></i>
+                    </div>
+                    <div class="menu-title">Kassa boshqaruvi</div>
+                </a>
+                <ul>
+                    <li><a href="{% url 'cashbox' %}"><i class="bx bx-right-arrow-alt"></i>Dashboard</a>
+                    </li>
+                    <li><a href="{% url 'income_account' %}"><i class="bx bx-right-arrow-alt"></i>Kirim xisobi</a>
+                    </li>
+                    <li><a href="{% url 'expense_account' %}"><i class="bx bx-right-arrow-alt"></i>Chiqim xisobi</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'staff_additional_salary' %}"><i class="bx bx-right-arrow-alt"></i>Ish xaqqi</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    {% endif %}
+</div>

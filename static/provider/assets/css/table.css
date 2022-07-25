@@ -1,0 +1,147 @@
+.yoq{
+	color: red !important;
+}
+.card__title{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.card__title button{
+	margin-right: 10px;
+}
+.divka{
+	display: flex;
+}
+.button_modal{
+	background: none;
+	outline: none;
+	border: none;
+	color: #e5e9ec;
+}
+#table__list h6{
+	display: flex;
+	align-items: center;
+
+}
+#table__list h6 input{
+	margin-left: 10px;
+}
+#table__list h6 span{
+	margin-left: 5px !important;
+}
+#table__list input{
+	width: 40%;
+}
+.data_pick{
+	display: flex;
+}
+.data_pick .picker {
+	transform: translateX(-186px);
+}
+.chart4_data{
+	display: flex;
+}
+.chart4_data .form-group{
+	display: flex;
+}
+.chart4_data .form-group input{
+	margin: 0 0 0 10px;
+}
+.picker__button--today, .picker__button--clear, .picker__button--close {
+	width: 27%;
+}
+.tovar_exel .col-md-5{
+	display: flex;
+}
+.tovar_exel .col-md-5 button{
+	margin-left: 10px;
+}
+.filiallar{
+	display: grid;
+	grid-template-columns: 95% 5%;
+}
+.filiallar .tovar_exel{
+	margin-left: 10px;
+}
+.divka_row{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.divka_row .form-group{
+	display: flex;
+	margin-bottom: 0;
+}
+.divka_row .form-group input{
+	margin-right: 10px;
+}
+.divka_row .form-group a{
+	margin-right: 10px;
+}
+.divka_row .dropdown-toggle{
+	height: 38px;
+}
+.card__title .picker__holder{
+	transform: translateX(295px) translateY(40px);
+}
+.tovar_qoshish p {
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-block-start: 0;
+	margin-block-end: 5px;
+}
+.faktura .example_filter div.dataTables_wrapper div.dataTables_filter input {
+	margin-left: 0.5em;
+	display: inline-block;
+	width: 300px !important;
+}
+.tavor_holati{
+	width: 20px;
+	height: 20px;
+	background: red;
+	border-radius: 50%;
+	margin-left: 20px;
+	cursor: pointer;
+}
+.qabul_qilindi{
+	background: green !important;
+}
+.tovar_check{
+	width: 60px;
+	height: 20px;
+	cursor: pointer;
+}
+#custom-checkbox {
+   position: relative;
+   text-transform: none;
+	left: 10px;
+}
+#custom-checkbox:before {
+   content: "";
+   display: inline-block;
+   width: 22px;
+   height: 22px;
+   background: red;
+	border-radius: 50%;
+	transform: translateY(-3px) translateX(-4px);
+}
+#custom-checkbox:checked:before {
+   background: green;
+}
+#custom-checkbox:checked:after {
+   content: "";
+   position: absolute;
+   width: 2px;
+   height: 2px;
+   left: 2px;
+   top: 7px;
+   background: white;
+   box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+   transform: rotate(45deg);
+}
+.card__title .select2-container--bootstrap4 .select2-selection--single {
+	width: 350px;
+}
+.table-responsive input[type=search]{
+	width: 400px !important;
+}

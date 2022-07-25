@@ -1,0 +1,435 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Kirim hisobi{% endblock %}
+
+{% block css %}
+    <link href="{% static 'provider/assets/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'provider/assets/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+
+{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+     {% for message in messages %}
+         <div class="text-center alert alert-{{ message.tags }}" id="alert_msg">
+             {{ message|safe }}
+         </div>
+     {% endfor %}
+    {% endif %}
+    <h3 class="ml-3 mb-3">Kirim hisobi</h3>
+
+    <div class="form-group ml-3" style="display: flex; justify-content: flex-START;">
+        <div class="form-group mr-2">
+            <a href="{% url 'income_account' %}?period=daily" class="btn btn-light">Kunlik</a>
+        </div>
+        <div class="form-group mr-2">
+            <a href="{% url 'income_account' %}?period=weekly" class="btn btn-light">Haftalik</a>
+        </div>
+        <div class="form-group mr-2">
+            <a href="{% url 'income_account' %}?period=monthly" class="btn btn-light">Oylik</a>
+        </div>
+        <div class="form-group mr-2">
+            <a href="{% url 'income_account' %}?period=yearly" class="btn btn-light">Yillik</a>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="button" class="btn btn-light m-3" data-toggle="modal" data-target="#exampleModal1">Kirim qilish
+        </button>
+    </div>
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-5">
+                    <h3 class="text-center">Kirim qilish</h3>
+                    <form action="{% url 'income_account' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <p>Filial</p>
+                            {{ form.branch }}
+                        </div>
+                        <div class="form-group">
+                            <label>Kimdan</label>
+                            <input type="text" name="whom" class="form-control form-control-lg"/>
+                        </div>
+                        <div class="form-group tolovTurlari">
+                            <label>Turi</label>
+                            <div style="display: flex; justify-content: space-around; align-items: center;">
+                                <!-- check -->
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" name="" id="tolov1" style="width: 16px; height: 16px;">
+                                    <label for="tolov1"
+                                           style="cursor: pointer; font-size: 16px; margin:0 0 0 5px;">So'm</label>
+                                </div>
+                                <!-- check -->
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" name="" id="tolov2" style="width: 16px; height: 16px;">
+                                    <label for="tolov2" style="cursor: pointer; font-size: 16px; margin:0 0 0 5px;">Plastik</label>
+                                </div>
+                                <!-- check -->
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" name="" id="tolov3" style="width: 16px; height: 16px;">
+                                    <label for="tolov3" style="cursor: pointer; font-size: 16px; margin:0 0 0 5px;">Perechisleniya</label>
+                                </div>
+                                <!-- check -->
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" name="" id="tolov4" style="width: 16px; height: 16px;">
+                                    <label for="tolov4" style="cursor: pointer; font-size: 16px; margin:0 0 0 5px;">Dollar</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- so'mda -->
+                        <div class="form-group" id="tolovInp1" style="display: none;">
+                            <label>So'mda</label>
+                            <input type="number" name="sum" class="form-control form-control-lg" value="0"/>
+                        </div>
+                        <!-- Plastik -->
+                        <div class="form-group" id="tolovInp2" style="display: none;">
+                            <label>Plastik</label>
+                            <input type="number" name="card" class="form-control form-control-lg" value="0"/>
+                        </div>
+                        <!-- Perechisleniya -->
+                        <div class="form-group" id="tolovInp3" style="display: none;">
+                            <label>Perechisleniya</label>
+                            <input type="number" name="transfer" class="form-control form-control-lg" value="0"/>
+                        </div>
+                        <!-- Do'llarda -->
+                        <div class="form-group" id="tolovInp4" style="display: none;">
+                            <label>Do'llarda</label>
+                            <input type="number" name="dollar" class="form-control form-control-lg" value="0"/>
+                        </div>
+                        <!-- Manzili -->
+                        <div class="form-group">
+                            <label>Izoh</label>
+                            <div class="form-group">
+                                <input class="form-control" name="comment">
+                            </div>
+                        </div>
+
+                        <!-- Yaratish -->
+                        <br>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-light btn-lg btn-block">Qo'shish
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="exampleKirimOdamlar" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Kimdan olgani</th>
+                        <th>Filial</th>
+                        <th>Summa (so'mda)</th>
+                        <th>Summa (do'llarda)</th>
+                        <th>Perecheslenya</th>
+                        <th>Plastik</th>
+                        <th>Sanasi</th>
+                        <th>Izoh</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for income_from_person in income_from_persons %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ income_from_person.whom }}</td>
+                            <td>{{ income_from_person.branch.name }}</td>
+                            <td>{{ income_from_person.sum|intcomma }}</td>
+                            <td>{{ income_from_person.dollar|intcomma }}</td>
+                            <td>{{ income_from_person.transfer|intcomma }}</td>
+                            <td>{{ income_from_person.card|intcomma }}</td>
+                            <td>{{ income_from_person.created_at }}</td>
+                            <td>{{ income_from_person.comment }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <!-- cllose => table -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'director/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'director/plugins/edittable/bstable.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            $('#example').DataTable({
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            var table = $('#exampleKirimFiliallar').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            table.buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+        })
+        // Example with a add new row button & only some columns editable & removed actions column label
+        var example2 = new BSTable("table2", {
+            editableColumns: "0,1,2,3,4,5",
+            $addButton: $('#table2-new-row-button'),
+            onEdit: function () {
+                console.log("EDITED");
+            },
+            advanced: {
+                columnLabel: ''
+            }
+        });
+        example2.init();
+
+        function dynamicTableValuesExample() {
+            // Generate new values for the table and show how BSTable updates
+            let numberOfRows = Math.floor(Math.random() * 10);
+            document.getElementById("table3-body").innerHTML = '1';
+            example3.refresh();
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            $('#example2').DataTable({
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            var table = $('#exampleKirimOdamlar').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            table.buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+        })
+        // Example with a add new row button & only some columns editable & removed actions column label
+        var example2 = new BSTable("table2", {
+            editableColumns: "0,1,2,3,4,5",
+            $addButton: $('#table2-new-row-button'),
+            onEdit: function () {
+                console.log("EDITED");
+            },
+            advanced: {
+                columnLabel: ''
+            }
+        });
+        example2.init();
+
+        function dynamicTableValuesExample() {
+            // Generate new values for the table and show how BSTable updates
+            let numberOfRows = Math.floor(Math.random() * 10);
+            document.getElementById("table3-body").innerHTML = '1';
+            example3.refresh();
+        }
+    </script>
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true
+        }),
+            $('.timepicker').pickatime()
+    </script>
+    <script>
+        $(function () {
+            $('#date-time').bootstrapMaterialDatePicker({
+                format: 'YYYY-MM-DD HH:mm'
+            });
+            $('#date').bootstrapMaterialDatePicker({
+                time: false
+            });
+            $('#time').bootstrapMaterialDatePicker({
+                date: false,
+                format: 'HH:mm'
+            });
+        });
+    </script>
+      <script>
+        var message_ele = document.getElementById("alert_msg");
+
+        setTimeout(function () {
+            message_ele.style.display = "none";
+        }, 3000);
+    </script>
+    <script>
+        let tolov1 = document.getElementById("tolov1");
+        let tolov2 = document.getElementById("tolov2");
+        let tolov3 = document.getElementById("tolov3");
+        let tolov4 = document.getElementById("tolov4");
+
+        let tolovInp1 = document.getElementById("tolovInp1");
+        let tolovInp2 = document.getElementById("tolovInp2");
+        let tolovInp3 = document.getElementById("tolovInp3");
+        let tolovInp4 = document.getElementById("tolovInp4");
+
+        var tolovOpen1 = false;
+        var tolovOpen2 = false;
+        var tolovOpen3 = false;
+        var tolovOpen4 = false;
+
+        tolov1.onclick = () => {
+            console.log(tolovOpen1)
+            if (tolovOpen1 === false) {
+                tolovOpen1 = !tolovOpen1
+                tolovInp1.setAttribute("style", "display:block")
+            } else {
+                tolovInp1.setAttribute("style", "display:none")
+                tolovOpen1 = !tolovOpen1
+            }
+        }
+
+        tolov2.onclick = () => {
+            console.log(tolovOpen1)
+            if (tolovOpen2 === false) {
+                tolovOpen2 = !tolovOpen2
+                tolovInp2.setAttribute("style", "display:block")
+            } else {
+                tolovInp2.setAttribute("style", "display:none")
+                tolovOpen2 = !tolovOpen2
+            }
+        }
+
+        tolov3.onclick = () => {
+            console.log(tolovOpen1)
+            if (tolovOpen3 === false) {
+                tolovOpen3 = !tolovOpen3
+                tolovInp3.setAttribute("style", "display:block")
+            } else {
+                tolovInp3.setAttribute("style", "display:none")
+                tolovOpen3 = !tolovOpen3
+            }
+        }
+
+        tolov4.onclick = () => {
+            console.log(tolovOpen1)
+            if (tolovOpen4 === false) {
+                tolovOpen4 = !tolovOpen4
+                tolovInp4.setAttribute("style", "display:block")
+            } else {
+                tolovInp4.setAttribute("style", "display:none")
+                tolovOpen4 = !tolovOpen4
+            }
+        }
+
+    </script>
+
+    <script>
+        let filTolov1 = document.getElementById("filTolov1");
+        let filTolov2 = document.getElementById("filTolov2");
+        let filTolov3 = document.getElementById("filTolov3");
+        let filTolov4 = document.getElementById("filTolov4");
+
+        let filTolovInp1 = document.getElementById("filTolovInp1");
+        let filTolovInp2 = document.getElementById("filTolovInp2");
+        let filTolovInp3 = document.getElementById("filTolovInp3");
+        let filTolovInp4 = document.getElementById("filTolovInp4");
+
+        var filTolovOpen1 = false;
+        var filTolovOpen2 = false;
+        var filTolovOpen3 = false;
+        var filTolovOpen4 = false;
+
+        filTolov1.onclick = () => {
+            if (filTolovOpen1 === false) {
+                filTolovOpen1 = !filTolovOpen1
+                filTolovInp1.setAttribute("style", "display:block")
+            } else {
+                filTolovInp1.setAttribute("style", "display:none")
+                filTolovOpen1 = !filTolovOpen1
+            }
+        }
+
+        filTolov2.onclick = () => {
+            if (filTolovOpen2 === false) {
+                filTolovOpen2 = !filTolovOpen2
+                filTolovInp2.setAttribute("style", "display:block")
+            } else {
+                filTolovInp2.setAttribute("style", "display:none")
+                filTolovOpen2 = !filTolovOpen2
+            }
+        }
+
+        filTolov3.onclick = () => {
+            if (filTolovOpen3 === false) {
+                filTolovOpen3 = !filTolovOpen3
+                filTolovInp3.setAttribute("style", "display:block")
+            } else {
+                filTolovInp3.setAttribute("style", "display:none")
+                filTolovOpen3 = !filTolovOpen3
+            }
+        }
+
+        filTolov4.onclick = () => {
+            if (filTolovOpen4 === false) {
+                filTolovOpen4 = !filTolovOpen4
+                filTolovInp4.setAttribute("style", "display:block")
+            } else {
+                filTolovInp4.setAttribute("style", "display:none")
+                filTolovOpen4 = !filTolovOpen4
+            }
+        }
+
+
+    </script>
+{% endblock %}

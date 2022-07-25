@@ -1,0 +1,173 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Mol yetkazib beruvchilar ro'yhati{% endblock %}
+
+{% block css %}
+    <link href="{% static 'director/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'director/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+{% endblock %}
+
+{% block content %}
+    <h3 class="ml-3 mb-3">Mol yetkazib beruvchilar ro'yhati</h3>
+
+    <!--end breadcrumb-->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="exampleKirimFiliallar" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Kompaniya nomi</th>
+                        <th>Adress</th>
+                        <th>Masul shaxs ism</th>
+                        <th>Tel</th>
+                        <th>Tel</th>
+                        <th>XR</th>
+                        <th>INN</th>
+                        <th>MFO</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for producer in producers %}
+{#                        {% if producer.product_set.from_queryset.%}#}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'delivery_detail' producer.pk%}">{{ producer.name }}</a></td>
+                            <td>{{ producer.address }}</td>
+                            <td>{{ producer.director_name }}</td>
+                            <td>{{ producer.phone_1 }}</td>
+                            <td>{{ producer.phone_2 }}</td>
+                            <td>{{ producer.bank_hr }}</td>
+                            <td>{{ producer.inn }}</td>
+                            <td>{{ producer.mfo }}</td>
+                        </tr>
+{#                        {% endif %}#}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <!-- cllose => table -->
+            </div>
+        </div>
+    </div>
+    <!-- filiallardan -->
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'director/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'director/plugins/edittable/bstable.js' %}"></script>
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true
+        }),
+            $('.timepicker').pickatime()
+    </script>
+    <script>
+        $(function () {
+            $('#date-time').bootstrapMaterialDatePicker({
+                format: 'YYYY-MM-DD HH:mm'
+            });
+            $('#date').bootstrapMaterialDatePicker({
+                time: false
+            });
+            $('#time').bootstrapMaterialDatePicker({
+                date: false,
+                format: 'HH:mm'
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            $('#example').DataTable({
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            var table = $('#exampleKirimFiliallar').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            table.buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+        })
+        // Example with a add new row button & only some columns editable & removed actions column label
+        var example2 = new BSTable("table2", {
+            editableColumns: "0,1,2,3,4,5",
+            $addButton: $('#table2-new-row-button'),
+            onEdit: function () {
+                console.log("EDITED");
+            },
+            advanced: {
+                columnLabel: ''
+            }
+        });
+        example2.init();
+
+        function dynamicTableValuesExample() {
+            // Generate new values for the table and show how BSTable updates
+            let numberOfRows = Math.floor(Math.random() * 10);
+            document.getElementById("table3-body").innerHTML = '1';
+            example3.refresh();
+        }
+    </script>
+    <!-- close table - 1 -->
+    <!-- table - 2 -->
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            $('#example2').DataTable();
+            var table = $('#exampleKirimOdamlar').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'print', 'colvis']
+            });
+            table.buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+        })
+        // Example with a add new row button & only some columns editable & removed actions column label
+        var example2 = new BSTable("table2", {
+            editableColumns: "0,1,2,3,4,5",
+            $addButton: $('#table2-new-row-button'),
+            onEdit: function () {
+                console.log("EDITED");
+            },
+            advanced: {
+                columnLabel: ''
+            }
+        });
+        example2.init();
+
+        function dynamicTableValuesExample() {
+            // Generate new values for the table and show how BSTable updates
+            let numberOfRows = Math.floor(Math.random() * 10);
+            document.getElementById("table3-body").innerHTML = '1';
+            example3.refresh();
+        }
+    </script>
+{% endblock %}

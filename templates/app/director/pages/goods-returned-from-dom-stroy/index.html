@@ -1,0 +1,152 @@
+{% extends 'app/base.html' %}
+
+{% block title %}Dom stroydan qaytgan tovarlar{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+<h3 class="ml-3 mb-3">Dom stroydan qaytgan tovarlar</h3>
+<div class="card radius-15">
+<div class="card-body">
+
+
+    <div class="form-group" style="display: flex; justify-content: flex-START;">
+
+        <div class="form-group mr-2">
+            <!-- data -->
+            <button type="button" class="btn btn-light">Kunlik</button>
+        </div>
+        <div class="form-group mr-2">
+            <!-- data -->
+            <button type="button" class="btn btn-light">Haftalik</button>
+        </div>
+        <div class="form-group mr-2">
+            <!-- data -->
+            <button type="button" class="btn btn-light">Oylik</button>
+        </div>
+        <div class="form-group mr-2">
+            <!-- data -->
+            <button type="button" class="btn btn-light">Yillik</button>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row">
+
+<!--  -->
+<div class="col-12 col-lg-2">
+    <div class="card radius-15">
+        <div class="card-body text-center radius-15" >
+            <h4 class="mb-0 font-weight-bold mt-3 text-white">Jami</h4>
+            <hr>
+            <h6 class="mb-0 text-white">2.300.300 so'm</h6>
+            <br>
+            <h6 class="mb-0 text-white">2.300 $</h6>
+            </div>
+    </div>
+</div>
+
+<!--  -->
+<div class="col-12 col-lg-2">
+    <div class="card radius-15">
+        <div class="card-body text-center radius-15" >
+            <h4 class="mb-0 font-weight-bold mt-3 text-white">Filial</h4>
+            <hr>
+            <h6 class="mb-0 text-white">2.300.300 so'm</h6>
+            <br>
+            <h6 class="mb-0 text-white">2.300 $</h6>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<div class="card radius-15">
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table class="table table-bordered qayt_tovar">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tovar nomi</th>
+                        <th scope="col">MYB</th>
+                        <th scope="col">Kelish narxi  <br/>(so'mda)</th>
+                        <th scope="col">Kelish narxi <br/> (do'llarda)</th>
+                        <th scope="col">Savdodagi narhi <br/> (so'mda)</th>
+                        <th scope="col">Savdodagi narhi <br/> (dollarda)</th>
+                        <th scope="col">Miqdori</th>
+                        <th scope="col">Filial nomi</th>
+                        <th scope="col">Hodim</th>
+                        <th scope="col">Izoh</th>
+                        <th scope="col">sanasi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><a href='#'>Akfa</a></td>
+                        <td>Duzel</td>
+                        <td>450.000</td>
+                        <td>450.000</td>
+                        <td>500.000</td>
+                        <td>50</td>
+                        <td>70</td>
+                        <td>Filial</td>
+                        <td>Hodim ismi</td>
+                        <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam.</td>
+                        <td>01.01.2021 12:12</td>
+                    </tr>
+
+
+
+
+                    <tr>
+                        <th scope="row">Jami:</th>
+                        <td><a href='#'></a></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+    <script>
+		$('.datepicker').pickadate({
+			selectMonths: true,
+	        selectYears: true
+		}),
+		$('.timepicker').pickatime()
+	</script>
+	<script>
+		$(function () {
+			$('#date-time').bootstrapMaterialDatePicker({
+				format: 'YYYY-MM-DD HH:mm'
+			});
+			$('#date').bootstrapMaterialDatePicker({
+				time: false
+			});
+			$('#time').bootstrapMaterialDatePicker({
+				date: false,
+				format: 'HH:mm'
+			});
+		});
+	</script>
+
+{% endblock %}

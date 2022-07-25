@@ -1,0 +1,1033 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+
+    <!-- ? -->
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="" style="display: flex; align-items: center;">
+
+                <div style="display: flex; align-items: center;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a type="button" class="btn btn-outline-light" style="border: 1px solid rgb(255 255 255 / 35%);">Kunlik</a>
+                        <a type="button" class="btn btn-outline-light" style="border: 1px solid rgb(255 255 255 / 35%);">Haftalik</a>
+                        <a type="button" class="btn btn-outline-light" style="border: 1px solid rgb(255 255 255 / 35%);">Oylik</a>
+                        <a type="button" class="btn btn-outline-light" style="border: 1px solid rgb(255 255 255 / 35%);">Yillik</a>
+                    </div>
+                   
+                    <input placeholder="dan" type="text" class="form-control datepicker"  style="background: none !important; margin-left: 5px; max-width: 130px; padding: 6px;"/>
+                    <input placeholder="gacha" type="text" class="form-control datepicker"  style="background: none !important; margin-left: 5px; max-width: 130px; padding: 6px;"/>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ? -->
+
+    <!-- ! -->
+    <!-- <div class="card radius-15">
+        <div class="card-body">
+            <div class="form-group" style="display: flex; justify-content: flex-START;">
+
+                <div class="form-group mr-2">
+                   
+                    <a href="{% url 'director_home' %}?period=daily" class="btn btn-light">Kunlik</a>
+                </div>
+                <div class="form-group mr-2">
+                    
+                    <a href="{% url 'director_home' %}?period=weekly" class="btn btn-light">Haftalik</a>
+                </div>
+                <div class="form-group mr-2">
+                   
+                    <a href="{% url 'director_home' %}?period=monthly" class="btn btn-light">Oylik</a>
+                </div>
+                <div class="form-group mr-2">
+                   
+                    <a href="{% url 'director_home' %}?period=yearly" class="btn btn-light">Yillik</a>
+                </div>
+            </div>
+
+        </div>
+    </div> -->
+    <!-- ! -->
+
+    <p style="margin-bottom: 0%; font-size: 18px;  padding-top: 40px;">Sotuv</p>
+    <hr style="margin:0 0 20px 0">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card radius-15">
+                <div class="card-header border-bottom-0">
+                    <div class="d-lg-flex align-items-center">
+                        <div class="ml-lg-auto mb-2 mb-lg-0 chart4_data">
+
+                            <div class="btn-group-round">
+                                <div class="btn-group">
+                                    <button id="ten_days__b2b_sum_dollar" type="button" class="btn btn-outline-light" style="border: 1px solid #3D4552;; color: #6E768C;">O'n
+                                        kunlik
+                                    </button>
+                                    <button id="one_month__b2b_sum_dollar" type="button" class="btn btn-outline-light" style="border: 1px solid #3D4552; color: #6E768C;">Bir
+                                        oylik
+                                    </button>
+                                    <button type="button" id="six_months__b2b_sum_dollar" type="button" class="btn btn-outline-light" style="border: 1px solid #3D4552; color: #6E768C;">
+                                        Olti oylik
+                                    </button>
+                                    <button type="button" id="one_year__b2b_sum_dollar" type="button" class="btn btn-outline-light" style="border: 1px solid #3D4552; color: #6E768C;">Bir
+                                        Yillik
+                                  0  </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="chart_b2b"></div>
+                </div>
+                <div class="card-footer">
+                    <h4>B2B</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card radius-15">
+                <div class="card-header border-bottom-0">
+                    <div class="d-lg-flex align-items-center">
+                        <div class="ml-lg-auto mb-2 mb-lg-0 chart4_data">
+                            <div class="btn-group-round">
+                                <div class="btn-group">
+                                    <button id="ten_days__b2c_sum_dollar" type="button" class="btn btn-outline-light" style="border: 1px solid #3D4552;; color: #6E768C;">O'n
+                                        kunlik
+                                    </button>
+                                    <button id="one_month__b2c_sum_dollar" type="button" class="btn btn-outline-light" style="border: 1px solid #3D4552;; color: #6E768C;">Bir
+                                        oylik
+                                    </button>
+                                    <button id="six_months__b2c_sum_dollar" type="button" class="btn btn-outline-light" style="border: 1px solid #3D4552;; color: #6E768C;">
+                                        Olti oylik
+                                    </button>
+                                    <button id="one_year__b2c_sum_dollar" type="button" class="btn btn-outline-light" style="border: 1px solid #3D4552;; color: #6E768C;">Bir
+                                        Yillik
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="chart_b2c"></div>
+                </div>
+                <div class="card-footer">
+                    <h4>B2C</h4>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="card-body">
+        <div id="chart{{ branch.id }}"></div>
+    </div>
+    <div class="card-footer">
+        <h5>{{ branch.name }}</h5>
+    </div>
+
+    <p style="margin-bottom: 0%; font-size: 18px;  padding-top: 40px;">Asosiy Kassa</p>
+    <hr style="margin:0 0 20px 0">
+    
+    <div class="row">
+
+        <div class="col-12 col-lg-4">
+            <div class="card radius-15">
+                <div class="card-body">
+                    <h6>So'm</h6>
+                    <h4>{{ total_sum|intcomma }}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <div class="card radius-15">
+                <div class="card-body">
+                    <h6>Dollar</h6>
+                    <h4>{{ total_dollar|intcomma }}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+            <div class="card radius-15">
+                <div class="card-body">
+                    <h6>Bank</h6>
+                    <h4>{{ bank|intcomma }}</h4>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- savdo xolati B2C aaa-->
+    <p style="margin-bottom: 0%; font-size: 18px;  padding-top: 40px;">Savdo holati B2C</p>
+    <hr style="margin:0 0 20px 0">
+
+    <div class="row">
+        {% for branch in branches %}
+            {% if branch.type_of_branch == "b2c" %}
+            
+
+            <div class="col-12 col-lg-4">
+                <div class="card radius-15">
+                    <div class="card-header border-bottom-0" style="display: flex; justify-content: space-between; align-items: center;">
+                        <!-- <h6>{{ branch.name }}</h6> -->
+                        <h5>B2C</h5>
+                        <h5>{{ branch.name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p>Naqd pul so'mda</p>
+                            <p>{{ branch.get_total_branch_shop_sum|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Naqd Dollar</p>
+                            <p>{{ branch.get_total_branch_shop_dollar|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Plastik</p>
+                            <p>{{ branch.get_total_branch_shop_card|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Pul o'tqazmalar</p>
+                            <p>{{ branch.get_total_branch_shop_transfer|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Nasiya so'mda</p>
+                            <p>{{ branch.get_total_branch_shop_loan_sum|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Nasiya dollarda</p>
+                            <p>{{ branch.get_total_branch_shop_loan_dollar|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Tovar qaytuv klientdan so'm</p>
+                            <p>{{ branch.get_total_sum_client_return|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Tovar qaytuv klientdan dollar</p>
+                            <p>{{ branch.get_total_dollar_client_return|intcomma }}</p>
+                        </div>
+
+                        {% comment %} <div class="d-flex justify-content-between">
+                            <p>Valyuta ayirboshlash</p>
+                            <p>500000000</p>
+                        </div>{% endcomment %}
+
+                    </div>
+                </div>
+            </div>
+
+{#            <div class="col-12 col-lg-4">#}
+{#                <div class="card radius-15">#}
+{#                    <div class="card-header border-bottom-0" style="display: flex; justify-content: space-between; align-items: center;">#}
+{#                        <!-- <h6>{{ branch.name }}</h6> -->#}
+{#                        <h5>B2C</h5>#}
+{#                        <h5>{{ branch.name }}</h5>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Naqd pul so'mda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_sum|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Naqd Dollar</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_dollar|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Plastik</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_card|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Pul o'tqazmalar</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_transfer|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Nasiya so'mda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_loan_sum|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Nasiya dollarda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_loan_dollar|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Tovar qaytuv klientdan so'm</p>#}
+{#                            <p>{{ branch.get_total_sum_client_return|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Tovar qaytuv klientdan dollar</p>#}
+{#                            <p>{{ branch.get_total_dollar_client_return|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        {% comment %} <div class="d-flex justify-content-between">#}
+{#                            <p>Valyuta ayirboshlash</p>#}
+{#                            <p>500000000</p>#}
+{#                        </div>{% endcomment %}#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-12 col-lg-4">#}
+{#                <div class="card radius-15">#}
+{#                    <div class="card-header border-bottom-0" style="display: flex; justify-content: space-between; align-items: center;">#}
+{#                        <!-- <h6>{{ branch.name }}</h6> -->#}
+{#                        <h5>B2C</h5>#}
+{#                        <h5>{{ branch.name }}</h5>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Naqd pul so'mda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_sum|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Naqd Dollar</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_dollar|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Plastik</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_card|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Pul o'tqazmalar</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_transfer|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Nasiya so'mda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_loan_sum|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Nasiya dollarda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_loan_dollar|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Tovar qaytuv klientdan so'm</p>#}
+{#                            <p>{{ branch.get_total_sum_client_return|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Tovar qaytuv klientdan dollar</p>#}
+{#                            <p>{{ branch.get_total_dollar_client_return|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        {% comment %} <div class="d-flex justify-content-between">#}
+{#                            <p>Valyuta ayirboshlash</p>#}
+{#                            <p>500000000</p>#}
+{#                        </div>{% endcomment %}#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            {% endif %}
+        {% endfor %}
+    </div>
+      <!-- savdo xolati B2C -->
+
+
+
+    <!-- savdo xolati B2B -->
+    <p style="margin-bottom: 0%; font-size: 18px;  padding-top: 40px;">Savdo holati B2B</p>
+    <hr style="margin:0 0 20px 0">
+
+    <div class="row">
+        {% for branch in branches %}
+            {% if branch.type_of_branch == "b2b" %}
+
+            <div class="col-12 col-lg-4">
+                <div class="card radius-15">
+                    <div class="card-header border-bottom-0" style="display: flex; justify-content: space-between; align-items: center;">
+                        <!-- <h6>{{ branch.name }}</h6> -->
+                        <h5>B2B</h5>
+                        <h5>{{ branch.name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p>Naqd pul so'mda</p>
+                            <p>{{ branch.get_total_branch_shop_sum|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Naqd Dollar</p>
+                            <p>{{ branch.get_total_branch_shop_dollar|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Plastik</p>
+                            <p>{{ branch.get_total_branch_shop_card|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Pul o'tqazmalar</p>
+                            <p>{{ branch.get_total_branch_shop_transfer|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Nasiya so'mda</p>
+                            <p>{{ branch.get_total_branch_shop_loan_sum|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Nasiya dollarda</p>
+                            <p>{{ branch.get_total_branch_shop_loan_dollar|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Tovar qaytuv klientdan so'm</p>
+                            <p>{{ branch.get_total_sum_client_return|intcomma }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p>Tovar qaytuv klientdan dollar</p>
+                            <p>{{ branch.get_total_dollar_client_return|intcomma }}</p>
+                        </div>
+
+                        {% comment %} <div class="d-flex justify-content-between">
+                            <p>Valyuta ayirboshlash</p>
+                            <p>500000000</p>
+                        </div>{% endcomment %}
+
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+{#            <div class="col-12 col-lg-4">#}
+{#                <div class="card radius-15">#}
+{#                    <div class="card-header border-bottom-0" style="display: flex; justify-content: space-between; align-items: center;">#}
+{#                        <!-- <h6>{{ branch.name }}</h6> -->#}
+{#                        <h5>B2B</h5>#}
+{#                        <h5>{{ branch.name }}</h5>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Naqd pul so'mda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_sum|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Naqd Dollar</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_dollar|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Plastik</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_card|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Pul o'tqazmalar</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_transfer|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Nasiya so'mda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_loan_sum|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Nasiya dollarda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_loan_dollar|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Tovar qaytuv klientdan so'm</p>#}
+{#                            <p>{{ branch.get_total_sum_client_return|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Tovar qaytuv klientdan dollar</p>#}
+{#                            <p>{{ branch.get_total_dollar_client_return|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        {% comment %} <div class="d-flex justify-content-between">#}
+{#                            <p>Valyuta ayirboshlash</p>#}
+{#                            <p>500000000</p>#}
+{#                        </div>{% endcomment %}#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-12 col-lg-4">#}
+{#                <div class="card radius-15">#}
+{#                    <div class="card-header border-bottom-0" style="display: flex; justify-content: space-between; align-items: center;">#}
+{#                        <!-- <h6>{{ branch.name }}</h6> -->#}
+{#                        <h5>B2B</h5>#}
+{#                        <h5>{{ branch.name }}</h5>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Naqd pul so'mda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_sum|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Naqd Dollar</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_dollar|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Plastik</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_card|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Pul o'tqazmalar</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_transfer|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Nasiya so'mda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_loan_sum|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Nasiya dollarda</p>#}
+{#                            <p>{{ branch.get_total_branch_shop_loan_dollar|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Tovar qaytuv klientdan so'm</p>#}
+{#                            <p>{{ branch.get_total_sum_client_return|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        <div class="d-flex justify-content-between">#}
+{#                            <p>Tovar qaytuv klientdan dollar</p>#}
+{#                            <p>{{ branch.get_total_dollar_client_return|intcomma }}</p>#}
+{#                        </div>#}
+{##}
+{#                        {% comment %} <div class="d-flex justify-content-between">#}
+{#                            <p>Valyuta ayirboshlash</p>#}
+{#                            <p>500000000</p>#}
+{#                        </div>{% endcomment %}#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+        {% endfor %}
+    </div>
+      <!-- savdo xolati B2B -->
+
+
+    <p style="margin-bottom: 0%; font-size: 18px;  padding-top: 40px;">Umumiy yillik</p>
+    <hr style="margin:0 0 20px 0">
+
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card radius-15">
+                <div class="card-header border-bottom-0">
+                    <h3>B2B</h3>
+                </div>
+                <div class="card-body">
+                    <div id="total_chart_b2b"></div>
+                </div>
+            </div>
+        </div>
+    <div class="col-12 col-lg-6">
+            <div class="card radius-15">
+                <div class="card-header border-bottom-0">
+                    <h3>B2C</h3>
+                </div>
+                <div class="card-body">
+                    <div id="total_chart_b2c"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'director/js/moment.js' %}"></script>
+
+    {% comment %}B2B{% endcomment %}
+    <script>
+        var options_b2b = {
+            series: [{
+                name: "So'm",
+                data: {{ data_b2b }}
+            }, {
+                name: 'Dollar',
+                data: {{ data_b2b_cash_dollar }}
+            }, {
+                name: 'Card',
+                data: {{ data_b2b_card }}
+            }, {
+                name: 'Perechesleniya',
+                data: {{ data_b2b_transfer }}
+            }
+            ],
+            chart: {
+                foreColor: 'rgba(255, 255, 255, 0.65)',
+                id: 'area-datetime',
+                type: 'area',
+                height: 350,
+                zoom: {
+                    enabled: true,
+                    type: 'x',
+                    autoScaleYaxis: false,
+                    zoomedArea: {
+                        fill: {
+                            color: '#90CAF9',
+                            opacity: 0.4
+                        },
+                        stroke: {
+                            color: '#0D47A1',
+                            opacity: 0.4,
+                            width: 1
+                        }
+                    }
+                },
+                dropShadow: {
+                    enabled: false,
+                    top: 3,
+                    left: 14,
+                    blur: 4,
+                    opacity: 0.10,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            annotations: {
+                yaxis: [{
+                    y: 30,
+                    borderColor: '#999',
+                    label: {
+                        show: true,
+                        text: 'Support',
+                        style: {
+                            color: "#fff",
+                            background: '#00E396'
+                        }
+                    }
+                }],
+                xaxis: [{
+                    borderColor: '#999',
+                    yAxisIndex: 0,
+                    label: {
+                        show: true,
+                        text: 'Rally',
+                        datetimeUTC: false,
+                        style: {
+                            color: "#fff",
+                            background: '#775DD0'
+                        }
+                    }
+                }]
+            },
+            markers: {
+                size: 0,
+                style: 'hollow',
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'datetime',
+                categories: {{ b2b_datetime_data|safe }}
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+                theme: 'dark',
+
+            },
+        };
+        var chart_b2b = new ApexCharts(document.querySelector("#chart_b2b"), options_b2b);
+        chart_b2b.render();
+
+        var resetCssClasses_chart_b2b = function (activeEl) {
+            var els = document.querySelectorAll('button')
+            Array.prototype.forEach.call(els, function (el) {
+                el.classList.remove('active')
+            })
+
+            activeEl.target.classList.add('active')
+        }
+
+        document
+            .querySelector('#ten_days__b2b_sum_dollar')
+            .addEventListener('click', function (e) {
+                resetCssClasses_chart_b2b(e)
+
+                const before = moment().subtract(10, 'days').format('D MMM YYYY');
+                const now = moment().format('D MMM YYYY');
+                chart_b2b.zoomX(
+                    new Date(before).getTime(),
+                    new Date(now).getTime()
+                )
+            })
+
+        document
+            .querySelector('#one_month__b2b_sum_dollar')
+            .addEventListener('click', function (e) {
+                resetCssClasses_chart_b2b(e)
+
+                const before = moment().subtract(1, 'month').format('D MMM YYYY');
+                const now = moment().format('D MMM YYYY');
+                chart_b2b.zoomX(
+                    new Date(before).getTime(),
+                    new Date(now).getTime()
+                )
+            })
+
+        document
+            .querySelector('#six_months__b2b_sum_dollar')
+            .addEventListener('click', function (e) {
+                resetCssClasses_chart_b2b(e)
+                console.log("sas")
+                const before = moment().subtract(6, 'month').format('D MMM YYYY');
+                const now = moment().format('D MMM YYYY');
+                chart_b2b.zoomX(
+                    new Date(before).getTime(),
+                    new Date(now).getTime()
+                )
+            })
+
+        document
+            .querySelector('#one_year__b2b_sum_dollar')
+            .addEventListener('click', function (e) {
+                resetCssClasses_chart_b2b(e)
+
+                const before = moment().subtract(1, 'year').format('D MMM YYYY');
+                const now = moment().format('D MMM YYYY');
+                chart_b2b.zoomX(
+                    new Date(before).getTime(),
+                    new Date(now).getTime()
+                )
+            })
+
+    </script>
+    {% comment %}B2C{% endcomment %}
+    <script>
+        var options_chart_b2c = {
+            series: [{
+                name: "So'm",
+                data: {{ data_b2c_cash_sum }}
+            }, {
+                name: 'Dollar',
+                data: {{ data_b2c_cash_dollar }}
+            }, {
+                name: 'Card',
+                data: {{ data_b2c_card }}
+            }, {
+                name: 'Perechesleniya',
+                data: {{ data_b2c_transfer }}
+            }
+            ],
+            chart: {
+                foreColor: 'rgba(255, 255, 255, 0.65)',
+                id: 'area-datetime',
+                type: 'area',
+                height: 350,
+                zoom: {
+                    enabled: true,
+                    type: 'x',
+                    autoScaleYaxis: false,
+                    zoomedArea: {
+                        fill: {
+                            color: '#90CAF9',
+                            opacity: 0.4
+                        },
+                        stroke: {
+                            color: '#0D47A1',
+                            opacity: 0.4,
+                            width: 1
+                        }
+                    }
+                },
+                dropShadow: {
+                    enabled: false,
+                    top: 3,
+                    left: 14,
+                    blur: 4,
+                    opacity: 0.10,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            annotations: {
+                yaxis: [{
+                    y: 30,
+                    borderColor: '#999',
+                    label: {
+                        show: true,
+                        text: 'Support',
+                        style: {
+                            color: "#fff",
+                            background: '#00E396'
+                        }
+                    }
+                }],
+                xaxis: [{
+                    borderColor: '#999',
+                    yAxisIndex: 0,
+                    label: {
+                        show: true,
+                        text: 'Rally',
+                        datetimeUTC: false,
+                        style: {
+                            color: "#fff",
+                            background: '#775DD0'
+                        }
+                    }
+                }]
+            },
+            markers: {
+                size: 0,
+                style: 'hollow',
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'datetime',
+                categories: {{ b2b_datetime_data|safe }}
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yy HH:mm'
+                },
+                theme: 'dark',
+
+            },
+        };
+        var chart_b2c = new ApexCharts(document.querySelector("#chart_b2c"), options_chart_b2c);
+        chart_b2c.render();
+
+        var resetCssClasses_chart_b2b = function (activeEl) {
+            var els = document.querySelectorAll('button')
+            Array.prototype.forEach.call(els, function (el) {
+                el.classList.remove('active')
+            })
+
+            activeEl.target.classList.add('active')
+        }
+
+        document
+            .querySelector('#ten_days__b2c_sum_dollar')
+            .addEventListener('click', function (e) {
+                resetCssClasses_chart_b2b(e)
+
+                const before = moment().subtract(10, 'days').format('D MMM YYYY');
+                const now = moment().format('D MMM YYYY');
+                chart_b2c.zoomX(
+                    new Date(before).getTime(),
+                    new Date(now).getTime()
+                )
+            })
+
+        document
+            .querySelector('#one_month__b2c_sum_dollar')
+            .addEventListener('click', function (e) {
+                resetCssClasses_chart_b2b(e)
+
+                const before = moment().subtract(1, 'month').format('D MMM YYYY');
+                const now = moment().format('D MMM YYYY');
+                chart_b2c.zoomX(
+                    new Date(before).getTime(),
+                    new Date(now).getTime()
+                )
+            })
+
+        document
+            .querySelector('#six_months__b2c_sum_dollar')
+            .addEventListener('click', function (e) {
+                resetCssClasses_chart_b2b(e)
+                console.log("sas")
+                const before = moment().subtract(6, 'month').format('D MMM YYYY');
+                const now = moment().format('D MMM YYYY');
+                chart_b2c.zoomX(
+                    new Date(before).getTime(),
+                    new Date(now).getTime()
+                )
+            })
+
+        document
+            .querySelector('#one_year__b2c_sum_dollar')
+            .addEventListener('click', function (e) {
+                resetCssClasses_chart_b2b(e)
+
+                const before = moment().subtract(1, 'year').format('D MMM YYYY');
+                const now = moment().format('D MMM YYYY');
+                chart_b2c.zoomX(
+                    new Date(before).getTime(),
+                    new Date(now).getTime()
+                )
+            })
+
+    </script>
+<!-- ############################################################################################################# -->
+{#      B2B   #}
+    <script>
+        var options_total_chart_b2b = {
+          series: [{
+          name: "So'm",
+          data: {{ total_monthly__b2b_sum|safe }}
+        }, {
+          name: 'Dollar',
+          data: {{ total_monthly__b2b_dollar|safe }}
+        }, {
+          name: 'Plastik',
+          data: {{ total_monthly__b2b_card|safe }}
+        },{
+          name: 'Transfer',
+          data: {{ total_monthly__b2b_transfer|safe }}
+        }],
+          chart: {
+              foreColor: 'rgba(255, 255, 255, 0.65)',
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: {{ b2b_datetime_data_by_month|safe }},
+        },
+        yaxis: {
+          title: {
+            text: "B2B bo'yicha savdo"
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+              theme:'dark',
+          y: {
+            formatter: function (val) {
+              return "" + val + ""
+            }
+          }
+        }
+        };
+
+        var total_chart_b2b = new ApexCharts(document.querySelector("#total_chart_b2b"), options_total_chart_b2b);
+        total_chart_b2b.render();
+    </script>
+{#      B2C          #}
+    <script>
+        var options_total_chart_b2c = {
+          series: [{
+          name: "So'm",
+          data: {{ total_monthly__b2c_sum|safe }}
+        }, {
+          name: 'Dollar',
+          data: {{ total_monthly__b2c_dollar|safe }}
+        }, {
+          name: 'Plastik',
+          data: {{ total_monthly__b2c_card|safe }}
+        }, {
+          name: 'Perechesleniya',
+          data: {{ total_monthly__b2c_transfer|safe }}
+        }],
+          chart: {
+              foreColor: 'rgba(255, 255, 255, 0.65)',
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: {{ b2c_datetime_data_by_month|safe }},
+        },
+        yaxis: {
+          title: {
+            text: "B2C bo'yicha savdo"
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+              theme:'dark',
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        }
+        };
+
+        var total_chart_b2c = new ApexCharts(document.querySelector("#total_chart_b2c"), options_total_chart_b2c);
+        total_chart_b2c.render();
+    </script>
+
+    <script>
+        new PerfectScrollbar('.dashboard-social-list');
+        new PerfectScrollbar('.dashboard-top-countries');
+    </script>
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true
+        })
+    </script>
+
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true
+        })
+    </script>
+{% endblock %}

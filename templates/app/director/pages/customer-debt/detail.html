@@ -1,0 +1,71 @@
+{% extends 'app/base.html' %}
+
+{% block title %}Mijoz qarzi{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+    <h4 class="ml-3 mb-3">Mijoz qarzi</h4>
+    <!-- tables -->
+    <div class="card radius-15">
+							<div class="card-body">
+								<div class="card-title">
+									<h4 class="mb-0">Ismi Familyasi</h4>
+								</div>
+								<hr/>
+								<div class="table-responsive">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Maxsulot nomi</th>
+												<th scope="col">Miqdori</th>
+												<th scope="col">Narx (so'mda)</th>
+												<th scope="col">Narx (do'llarda)</th>
+												<th scope="col">sanasi</th>
+												<th scope="col">Izoh</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row">1</th>
+												<td>rom</td>
+												<td>10</td>
+												<td>80.000</td>
+												<td>8</td>
+												<td>01.01.2021</td>
+												<td>lorem....</td>
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+{% endblock %}
+
+{% block js %}
+<script>
+		$('.datepicker').pickadate({
+			selectMonths: true,
+	        selectYears: true
+		}),
+		$('.timepicker').pickatime()
+	</script>
+	<script>
+		$(function () {
+			$('#date-time').bootstrapMaterialDatePicker({
+				format: 'YYYY-MM-DD HH:mm'
+			});
+			$('#date').bootstrapMaterialDatePicker({
+				time: false
+			});
+			$('#time').bootstrapMaterialDatePicker({
+				date: false,
+				format: 'HH:mm'
+			});
+		});
+	</script>
+{% endblock %}

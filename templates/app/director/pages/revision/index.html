@@ -1,0 +1,128 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Reviziya{% endblock %}
+
+{% block css %}
+  <link href="{% static 'director/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'director/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between;">
+        <h3>Reviziya</h3>
+    </div>
+
+    <!-- FILIAL TANLASH -->
+    <div class="card radius-15">
+
+        <div class="card-body">
+            <div class="card-title">
+                <h4 class="mb-0">Filiallar</h4>
+            </div>
+            <hr/>
+             <div class="form-group">
+                <select id="hodimlarFilialTanlash" class="form-control">
+                    <option selected value>Barcha filiallar ro'yxati</option>
+                    {% for branch in branches %}
+                        <option value="{{ branch.name }}">{{ branch.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- FILIAL TANLASH -->
+    <!-- tables -->
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="card-title">
+            </div>
+            <hr/>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="example">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nomi</th>
+                        <th scope="col">Filial</th>
+                        <th scope="col">Boshqaruvchi</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Hozirgi miqqdori</th>
+                        <th scope="col">Dasturdagi miqdori</th>
+                        <th scope="col">Narxlar farqi so'mda</th>
+                        <th scope="col">Narxlar farqi dollarda</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in inventory_items %}
+                            <tr>
+                                <th scope="col">{{ forloop.counter }}</th>
+                                <th scope="col">{{ item.product.name }}</th>
+                                <th scope="col">{{ item.inventory.branch.name }}</th>
+                                <th scope="col">{{ item.inventory.controller.first_name }} {{ item.inventory.controller.last_name }}</th>
+                                <th scope="col">{{ item.inventory.status }}</th>
+                                <th scope="col">{{ item.real_amount }}</th>
+                                <th scope="col">{{ item.in_program_amount }}</th>
+                                <th scope="col">{{ item.difference_sum }}</th>
+                                <th scope="col">{{ item.difference_sum }}</th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'director/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            var table = $('#example').DataTable({
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            var selectVal = $('#hodimlarFilialTanlash').val()
+            $('#hodimlarFilialTanlash').on('change', function () {
+                table.search(this.value).draw();
+            });
+            table.search(selectVal).draw();
+        })
+    </script>
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true
+        }),
+            $('.timepicker').pickatime()
+    </script>
+    <script>
+        $(function () {
+            $('#date-time').bootstrapMaterialDatePicker({
+                format: 'YYYY-MM-DD HH:mm'
+            });
+            $('#date').bootstrapMaterialDatePicker({
+                time: false
+            });
+            $('#time').bootstrapMaterialDatePicker({
+                date: false,
+                format: 'HH:mm'
+            });
+        });
+    </script>
+{% endblock %}

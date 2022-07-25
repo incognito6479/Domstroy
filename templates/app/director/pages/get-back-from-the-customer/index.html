@@ -1,0 +1,239 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Mijozdan qaytuvi{% endblock %}
+
+{% block css %}
+    <link href="{% static 'director/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'director/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+
+    <style>
+        .branch_cart_btn:focus {
+            outline: none;
+            border: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h3 class="ml-3 mb-3">Klientdan qaytib olish</h3>
+    
+    <div class="card radius-15">
+        <div class="card-body">
+            <!-- <div class="form-group" style="display: flex; justify-content: flex-START;"> -->
+            <div class="" style="display: flex; justify-content:space-between; align-items: center;">
+
+                <!-- ? -->
+                <div style="display: flex; align-items: center;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a type="button" class="btn btn-outline-light" style="border: 1px solid rgb(255 255 255 / 35%);">Kunlik</a>
+                        <a type="button" class="btn btn-outline-light" style="border: 1px solid rgb(255 255 255 / 35%);">Haftalik</a>
+                        <a type="button" class="btn btn-outline-light" style="border: 1px solid rgb(255 255 255 / 35%);">Oylik</a>
+                        <a type="button" class="btn btn-outline-light" style="border: 1px solid rgb(255 255 255 / 35%);">Yillik</a>
+                    </div>
+                   
+                    <input placeholder="dan" type="text" class="form-control datepicker"  style="background: none !important; margin-left: 5px; max-width: 130px; padding: 6px;"/>
+                    <input placeholder="gacha" type="text" class="form-control datepicker"  style="background: none !important; margin-left: 5px; max-width: 130px; padding: 6px;"/>
+
+                </div>
+
+                <div>
+                    <p style="margin: 0 0 4px 0">Filiallar:</p>
+                    <div class="" style="width: 300PX;">
+                        <select id="tovarFilialTanlash" class="form-control">
+                            <option selected value >Hamma tovarlar ro’yhati</option>
+
+                            {% for branch in branches %}
+                                {% if branch.type_of_branch == "b2b" %}
+                                    <option value="{{ branch.name }}">{{ branch.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <!-- ? -->
+
+             
+                <!-- ! -->
+                <!-- data -->
+                <!-- <div class="mr-2">
+                    <a href="{% url 'get_back_from_the_customer_b2b' %}?period=daily" class="btn btn-light">Kunlik</a>
+                </div> -->
+                <!-- data -->
+                <!-- <div class="mr-2">
+                    <a href="{% url 'get_back_from_the_customer_b2b' %}?period=weekly" class="btn btn-light">Haftalik</a>
+                </div> -->
+                <!-- data -->
+                <!-- <div class="mr-2">
+                    <a href="{% url 'get_back_from_the_customer_b2b' %}?period=monthly" class="btn btn-light">Oylik</a>
+                </div> -->
+                <!-- data -->
+                <!-- <div class="mr-2">
+                    <a href="{% url 'get_back_from_the_customer_b2b' %}?period=yearly" class="btn btn-light">Yillik</a>
+                </div> -->
+                <!-- ! -->
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+
+        <!--  -->
+        {% comment %}<div class="col-md-12">
+            <div class="card radius-15">
+                <div class="card-body btn-dark text-center radius-15" style="cursor: pointer;">
+                    <h4 class="mb-0 font-weight-bold mt-3 text-white">Jami</h4>
+                    <hr>
+                    <h6 class="mb-0 text-white">{% if total_selling_price_in_sum %}
+                        {{ total_selling_price_in_sum }} so'm
+                    {% endif %}</h6>
+                    <br>
+                    <h6 class="mb-0 text-white">{% if total_selling_price_in_dollar %}
+                        {{ total_selling_price_in_dollar }} $
+                    {% endif %}</h6>
+                </div>
+            </div>
+        </div>{% endcomment %}
+
+        <!--  -->
+        <div class="col-md-12">
+            <div class="row justify-content-around">
+                {% for branch in branches %}
+                    {% if branch.get_total_sum_client_return or get_total_dollar_client_return %}
+                        <div class="card branch_cart radius-15">
+
+                            <div class="card-body btn-dark text-center radius-15 branch-item" style="cursor: pointer;">
+                                <div class="brenach_items">
+                                    <button class="mb-0 font-weight-bold mt-3 text-white branch_cart_btn"
+                                            value="{{ branch.name }}"
+                                            style="background: transparent;border: none;">{{ branch.name }}</button>
+                                </div>
+                                <hr>
+                                <h6 class="mb-0 text-white">
+                                    {% if branch.get_total_sum_client_return %}
+                                        {{ branch.get_total_sum_client_return }} so'm
+                                    {% endif %}
+                                </h6>
+                                <br>
+                                <h6 class="mb-0 text-white">
+                                    {% if branch.get_total_dollar_client_return %}
+                                        {{ branch.get_total_dollar_client_return }} $
+                                    {% endif %}
+                                </h6>
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- ? -->
+    <p style="margin: 0;">Mijozdan qaytgan mahsulotlar   B2B</p>
+    <hr style="margin-top: 7px;">
+    <!-- ? -->
+
+    <div class="card radius-15">
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered" id="goods_list">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tovar nomi</th>
+                        <th scope="col">Klient ismi</th>
+                        <th scope="col">Kelish narxi <br/>(so'mda)/(do'llarda)</th>
+                        <th scope="col">Savdodagi narhi <br/> (so'mda)/(dollarda)</th>
+                        <th scope="col">Miqdori</th>
+                        <th scope="col">Filial nomi</th>
+                        <th scope="col">Hodim</th>
+                        <th scope="col">Izoh</th>
+                        <th scope="col">sanasi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+{#                        {% if product.branch.type_of_branch == "b2b" %}#}
+                            <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td><a href='#'>{{ product.name }}</a></td>
+                            <td>{{ product.client.first_name }} {{ product.client.last_name }}</td>
+                            <td>
+                                {{ product.cost }} {% if product.currency == 'sum' %}so'm{% else %}${% endif %}
+                            </td>
+                            <td>{{ product.selling_price }} {% if product.currency == 'sum' %}so'm{% else %}
+                                ${% endif %}</td>
+                            <td>{{ product.amount }}</td>
+                            <td>{{ product.branch.name }}</td>
+                            <td>{{ product.staff.first_name }} {{ product.staff.last_name }}</td>
+                            <td>{{ product.note }}</td>
+                            <td>{{ product.created_at }}</td>
+                        </tr>
+{#                        {% endif %}#}
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+<div>
+    
+</div>
+
+{% block js %}
+    <script src="{% static 'director/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+            let table = $('#goods_list').DataTable({
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
+            });
+            $('.branch_cart_btn').on('click', function () {
+                table.search(this.value, false, false).draw();
+            });
+        })
+    </script>
+
+<script>
+    $('.datepicker').pickadate({
+        selectMonths: true,
+        selectYears: true
+    }),
+    $('.timepicker').pickatime()
+</script>
+<script>
+    $(function () {
+        $('#date-time').bootstrapMaterialDatePicker({
+            format: 'YYYY-MM-DD HH:mm'
+        });
+        $('#date').bootstrapMaterialDatePicker({
+            time: false
+        });
+        $('#time').bootstrapMaterialDatePicker({
+            date: false,
+            format: 'HH:mm'
+        });
+    });
+</script>
+{% endblock %}

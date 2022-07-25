@@ -1,0 +1,110 @@
+{% extends 'app/base.html' %}
+{% load humanize %}
+{% block title %}Yakuniy moliyaviy natija Forma 1{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+    <h3>Qarz holati</h3>
+    <div class="row">
+
+        <!--  -->
+        <div class="col-12 col-lg-6">
+            <div class="card radius-15">
+                <div class="card-body text-center radius-15">
+                    <h5 class="mb-0 font-weight-bold mt-3 text-white">Mijoz Qarzi</h5>
+                    <hr>
+                    <h6 class="mb-0 text-white">{{ total_client_loan_sum|intcomma }} so'm</h6>
+                    <br>
+                    <h6 class="mb-0 text-white">{{ total_client_loan_sum|intcomma }} do'llar</h6>
+                </div>
+            </div>
+        </div>
+
+        <!--  -->
+        <div class="col-12 col-lg-6">
+            <div class="card radius-15">
+                <div class="card-body text-center radius-15">
+                    <h5 class="mb-0 font-weight-bold mt-3 text-white">Mol yetkazib beruvchilardan qarzimiz</h5>
+                    <hr>
+                    <h6 class="mb-0 text-white">{{ total_deliver_loan_sum|intcomma }} so'm</h6>
+                    <br>
+                    <h6 class="mb-0 text-white">{{ total_deliver_loan_dollar|intcomma }} do'llar</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-12">
+            <h3>Kassa holati</h3>
+            <div class="row">
+                <div class="col-12 col-lg-3">
+                    <div class="card radius-15">
+                        <div class="card-body text-center radius-15">
+                            <h5 class="mb-0 font-weight-bold mt-3 text-white">So'm</h5>
+                            <hr>
+                            <h6 class="mb-0 text-white">{{ total_sum|intcomma }} so'm</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3">
+                    <div class="card radius-15">
+                        <div class="card-body text-center radius-15">
+                            <h5 class="mb-0 font-weight-bold mt-3 text-white">Dollar</h5>
+                            <hr>
+                            <h6 class="mb-0 text-white">{{ total_dollar|intcomma }} $</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <div class="card radius-15">
+                        <div class="card-body text-center radius-15">
+                            <h5 class="mb-0 font-weight-bold mt-3 text-white">Plastik karta</h5>
+                            <hr>
+                            <h6 class="mb-0 text-white">{{ total_card|intcomma }} so'm</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <div class="card radius-15">
+                        <div class="card-body text-center radius-15">
+                            <h5 class="mb-0 font-weight-bold mt-3 text-white">Pul o'tqazmalar</h5>
+                            <hr>
+                            <h6 class="mb-0 text-white">{{ total_transfer|intcomma }} so'm</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-12">
+            <h3>Tovar holati</h3>
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card radius-15">
+                    <div class="card-body text-center radius-15">
+                        <h5 class="mb-0 font-weight-bold mt-3 text-white">Umumiy kirim (so'm)</h5>
+                        <hr>
+                        <h6 class="mb-0 text-white">{{ total_income_cost_sum|intcomma }} so'm</h6>
+                    </div>
+                </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="card radius-15">
+                    <div class="card-body text-center radius-15">
+                        <h5 class="mb-0 font-weight-bold mt-3 text-white">Umumiy kirim (Dollar)</h5>
+                        <hr>
+                        <h6 class="mb-0 text-white">{{ total_income_cost_dollar|intcomma }} $</h6>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

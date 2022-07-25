@@ -1,0 +1,137 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Tavar Reytingi{% endblock %}
+
+{% block css %}
+    <link href="{% static 'provider/assets/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'provider/assets/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div class="page-breadcrumb d-none d-md-flex align-items-center mb-3">
+        <div class="pl-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="javascript:;"><i class='bx bx-home-alt'></i></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Tavar Reytingi</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title card__title">
+                <div class="divka">
+                     <div class="form-group">
+                        <select id="hodimlarFilialTanlash" class="form-control">
+                            <option></option>
+                            {% for branch in branches %}
+                                <option value="{{ branch.name }}">{{ branch.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="tovar_exel"></div>
+            </div>
+            <hr/>
+            <div class="table-responsive">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Maxsulot nomi</th>
+                        <th>Yetkazib beruvchi</th>
+                        <th>Filial</th>
+                        <th>Ishlab chiqaruvchi</th>
+                        <th>O'lchovi</th>
+                        <th>Qancha sotildi</th>
+                        <th>Narxi So'mda/Dollorda</th>
+                        <th>Shtrix kod</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ product.product.name }}</td>
+                                <td>{{ product.product.deliver.name }}</td>
+                                <td>{{ product.product.branch.name }}</td>
+                                <td>{{ product.product.producer.name }}</td>
+                                <td>{{ product.product.measurement }}</td>
+                                <td>{{ product.product.amount }}</td>
+                                <td><span data-value="kelish">{{ product.selling_price }} </span>
+                                    {% if product.product.currency == 'sum' %}
+                                        so'm
+                                    {% else %}
+                                        $
+                                    {% endif %}
+                                </td>
+                                <td>{{ product.product.barcode }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <p>Jami: <span class="narxi"></span>{{ total_cost_sum }} so'm</p>
+                        <p>Jami: <span class="sotish_narxi"></span>{{ total_cost_dollar }} $</p>
+                    </td>
+                    <td></td>
+                    </tfoot>
+                </table>
+            </div>
+            <hr>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'provider/assets/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            var table = $('#example').DataTable({
+                buttons: ['excel']
+            });
+            table.buttons().container().appendTo('.tovar_exel');
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            //Default data table
+            var table = $('#example').DataTable();
+            var selectVal = $('#hodimlarFilialTanlash').val()
+            $('#hodimlarFilialTanlash').on('change', function () {
+                table.search(this.value).draw();
+            });
+            table.search(selectVal).draw();
+        })
+    </script>
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true
+        }),
+            $('.timepicker').pickatime()
+    </script>
+    <script>
+        $('.single-select').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+        });
+    </script>
+{% endblock %}

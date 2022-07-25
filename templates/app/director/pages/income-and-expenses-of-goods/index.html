@@ -1,0 +1,91 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Tovar kirim chiqim{% endblock %}
+{% block css %}
+    <link href="{% static 'provider/assets/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'provider/assets/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+						<div class="card-body">
+
+							<hr/>
+							<div class="table-responsive">
+								<table id="example" class="table table-striped table-bordered" style="width:100%">
+									<thead>
+										<tr>
+											<th>№</th>
+											<th>Maxsulot nomi</th>
+											<th>Yetkazib beruvchi</th>
+											<th>Ishlab chiqaruvchi</th>
+											<th>Omborda</th>
+											<th>O'lchovi</th>
+											<th>Qancha sotildi</th>
+											<th>Narxi  "So'mda"</th>
+											<th>Narxi  "Dollorda"</th>
+											<th>Shtrix kod</th>
+										</tr>
+									</thead>
+									<tbody >
+                                        {% for product in products %}
+                                            <tr>
+											<td>{{ forloop.counter }}</td>
+											<td>{{ product.name }}</td>
+											<td>{{ product.deliver.name }}</td>
+											<td>Akfa</td>
+											<td>Akfa</td>
+											<td>{{ product.measurement }}</td>
+											<td>{{ product.amount }}</td>
+											<td><span data-value="kelish">{{ product.cost }} </span> so'm</td>
+											<td><span data-value="sotish">{{ product.selling_price }} </span> $</td>
+											<td>{{ product.barcode }}</td>
+                                        </tr>
+                                        {% endfor %}
+									</tbody>
+									<tfoot>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+                					    <td>Jami: <span class="narxi"></span>{{ total_cost }} so'm</td>
+										<td>Jami: <span class="sotish_narxi"></span>{{ total_selling_price }} $</td>
+										<td></td>
+									</tfoot>
+								</table>
+							</div><hr>
+						</div>
+					</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'director/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+<script>
+		$(document).ready(function () {
+			//Default data table
+			var table = $('#example').DataTable({
+
+			});
+			table.buttons().container().appendTo('.tovar_exel');
+		})
+	</script>
+	<script>
+		$('.datepicker').pickadate({
+			selectMonths: true,
+	      selectYears: true
+		}),
+		$('.timepicker').pickatime()
+	</script>
+	<script>
+		$('.single-select').select2({
+			theme: 'bootstrap4',
+			width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+			placeholder: $(this).data('placeholder'),
+			allowClear: Boolean($(this).data('allow-clear')),
+		});
+	</script>
+{% endblock %}

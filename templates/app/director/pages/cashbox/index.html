@@ -1,0 +1,538 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Kassa{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+
+    <h3 class="ml-3 mb-3">Kassa</h3>
+    <div class="card radius-15">
+        <div class="card-body">
+            <!-- main -->
+
+            <br>
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <h4 class="ml-4">Kirim</h4>
+                    <div class="card radius-15">
+                        <div class="card-header border-bottom-0">
+                            <div class="d-lg-flex align-items-center">
+
+                                <div class="ml-lg-auto mb-2 mb-lg-0 chart4_data">
+                                    <div class="form-group mr-2">
+                                        <button type="button" id="ten_days" class="btn btn-light ml-2">O'n kunlik</button>
+                                        <button type="button" id="one_month" class="btn btn-light ml-2">Oylik</button>
+                                        <button type="button" id="six_months" class="btn btn-light ml-2">Olti oylik</button>
+                                        <button type="button" id="one_year" class="btn btn-light ml-2">Yillik</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="kassa_kirim"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <h4 class="ml-4">Chiqim</h4>
+                    <div class="card radius-15">
+                        <div class="card-header border-bottom-0">
+                            <div class="d-lg-flex align-items-center">
+
+                                <div class="ml-lg-auto mb-2 mb-lg-0 chart4_data">
+                                    <div class="form-group mr-2">
+                                        <div class="form-group mr-2">
+                                            <button type="button" class="btn btn-light ml-2" id="ten_days_kassa_chiqim">O'n kunlik</button>
+                                        </div>
+                                        <div class="form-group mr-2">
+                                            <button type="button" class="btn btn-light ml-2" id="one_month_kassa_chiqim">Oylik</button>
+                                        </div>
+                                        <div class="form-group mr-2">
+                                            <button type="button" class="btn btn-light ml-2" id="six_months_kassa_chiqim">Olti oylik</button>
+                                        </div>
+                                        <div class="form-group mr-2">
+                                            <button type="button" class="btn btn-light ml-2" id="one_year_kassa_chiqim">Yillik</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="kassa_chiqim"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card radius-15">
+        <div class="card-body">
+            <div class="row">
+                <!--  -->
+                <div class="col-12 col-lg-2">
+                    <div class="card radius-15">
+                        <div class="card-body text-center radius-15">
+                            <h5 class="mb-0 font-weight-bold mt-3 text-white">So'm</h5>
+                            <hr>
+                            <h6 class="mb-0 text-white">{{ total_sum|intcomma }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  -->
+                <div class="col-12 col-lg-2">
+                    <div class="card radius-15">
+                        <div class="card-body text-center radius-15">
+                            <h5 class="mb-0 font-weight-bold mt-3 text-white">Dollar</h5>
+                            <hr>
+                            <h6 class="mb-0 text-white">{{ total_dollar|intcomma }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  -->
+                <div class="col-12 col-lg-2">
+                    <div class="card radius-15">
+                        <div class="card-body text-center radius-15">
+                            <h5 class="mb-0 font-weight-bold mt-3 text-white">Plastik karta</h5>
+                            <hr>
+                            <h6 class="mb-0 text-white">{{ total_card|intcomma }}</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-2">
+                    <div class="card radius-15">
+                        <div class="card-body text-center radius-15">
+                            <h5 class="mb-0 font-weight-bold mt-3 text-white">Pul o'tkazma</h5>
+                            <hr>
+                            <h6 class="mb-0 text-white">{{ total_transfer|intcomma }}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        new PerfectScrollbar('.dashboard-social-list');
+        new PerfectScrollbar('.dashboard-top-countries');
+    </script>
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: true
+        })
+    </script>
+
+    <script>
+        $('#exampleVaryingModalContent').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        });
+    </script>
+
+    <script>
+        var settingsLavozim = document.querySelector("#settingsLavozim")
+        var settingsFilial = document.querySelector('#settingsFilial')
+        var settingsfilialcontent = `<label>Filiali</label>
+						<select class="form-control form-control-lg">
+							<option></option>
+							<option>filial1</option>
+							<option>filial2</option>
+							<option>filial3</option>
+							<option>filial4</option>
+						</select>`;
+
+        settingsLavozim.onclick = () => {
+            var settingsLavozim1 = document.querySelector("#settingsLavozim").value
+            if (settingsLavozim1 === 'kassir' || settingsLavozim1 === 'sotuvchi' || settingsLavozim1 === 'sotuvchikassir') {
+                settingsFilial.innerHTML = settingsfilialcontent;
+            } else {
+                settingsFilial.innerHTML = ""
+            }
+        }
+        var b2csavdo = document.querySelector('#b2csavdo')
+        var Sotuvturi = document.querySelector("#Sotuvturi")
+
+        var Maxsulot = document.querySelector('#Maxsulot')
+        var qoshishBtn = document.querySelector("#qoshishBtn")
+
+        Sotuvturi.onclick = () => {
+            var Sotuvturi1 = document.querySelector("#Sotuvturi").value
+            if (Sotuvturi1 === 'b2c') {
+                console.log('binasa')
+                b2csavdo.setAttribute("style", "display: block;")
+
+            } else {
+                b2csavdo.setAttribute("style", "display: none;")
+            }
+        }
+
+
+        qoshishBtn.onclick = () => {
+            var mahSon = document.querySelector("#mahSon").value
+            var mahSonYan = ""
+            for (var i = 1; i <= mahSon; i++) {
+                mahSonYan = mahSonYan + `<div class="form-group"> <label>${i}.</label> <input type="text" class="form-control form-control-lg" /> </div>`
+            }
+            Maxsulot.innerHTML = mahSonYan
+        }
+    </script>
+    <script>
+        // kassa_kirim start
+        var options = {
+            series: [
+                {
+                    name: "So'm",
+                    data: {{ daily_total_sum }}
+                }, {
+                    name: "Dollar",
+                    data: {{daily_total_dollar}}
+                }, {
+                    name: "Pul o'tkazmalar",
+                    data: {{ daily_total_transfer }}
+                }, {
+                    name: "Plastik",
+                    data: {{ daily_total_card }}
+                }
+
+            ],
+            chart: {
+                foreColor: 'rgba(255, 255, 255, 0.65)',
+                type: 'area',
+                height: 273,
+                toolbar: {
+                    show: true
+                },
+                zoom: {
+                    enabled: true,
+                    type: 'x',
+                    autoScaleYaxis: false,
+                    zoomedArea: {
+                        fill: {
+                            color: '#90CAF9',
+                            opacity: 0.4
+                        },
+                        stroke: {
+                            color: '#0D47A1',
+                            opacity: 0.4,
+                            width: 1
+                        }
+                    }
+                },
+                dropShadow: {
+                    enabled: false,
+                    top: 3,
+                    left: 14,
+                    blur: 4,
+                    opacity: 0.10,
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left',
+                offsetX: -25
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 3,
+                curve: 'smooth'
+            },
+            tooltip: {
+                theme: 'dark',
+                 y: {
+                     formatter: function (val) {
+                         return "$ " + val + " "
+                     }
+                 }
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    gradientToColors: ['#fff', '#fff', '#fff', '#fff'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    inverseColors: false,
+                    opacityFrom: 0.4,
+                    opacityTo: 0.1,
+                    //stops: [0, 50, 65, 91]
+                },
+            },
+            grid: {
+                show: true,
+                borderColor: 'rgba(255, 255, 255, 0.12)',
+                strokeDashArray: 5,
+            },
+            colors: ["red", "green", "yellow", "blue"],
+            xaxis: {
+                type: 'datetime',
+                categories:{{ date|safe }},
+                tickAmount: 6,
+                labels: {
+                        datetimeFormatter: {
+                            year: 'yyyy',
+                            month: 'MMM \'yy',
+                            day: 'dd MMM',
+                            hour: 'HH:mm'
+                        }
+                    }
+            }
+        };
+
+        var kassa_kirim = new ApexCharts(document.querySelector("#kassa_kirim"), options);
+        kassa_kirim.render();
+        // kassa_kirim end
+
+
+
+                  var resetCssClasses = function (activeEl) {
+                var els = document.querySelectorAll('button')
+                Array.prototype.forEach.call(els, function (el) {
+                    el.classList.remove('active')
+                })
+
+                activeEl.target.classList.add('active')
+            }
+
+            document
+                .querySelector('#ten_days')
+                .addEventListener('click', function (e) {
+                    resetCssClasses(e)
+
+                    const before = moment().subtract(10, 'days').format('D MMM YYYY');
+                    const now = moment().format('D MMM YYYY');
+                    kassa_kirim.zoomX(
+                        new Date(before).getTime(),
+                        new Date(now).getTime()
+                    )
+                })
+
+            document
+                .querySelector('#one_month')
+                .addEventListener('click', function (e) {
+                    resetCssClasses(e)
+
+                    const before = moment().subtract(1, 'month').format('D MMM YYYY');
+                    const now = moment().format('D MMM YYYY');
+                    kassa_kirim.zoomX(
+                        new Date(before).getTime(),
+                        new Date(now).getTime()
+                    )
+                })
+
+            document
+                .querySelector('#six_months')
+                .addEventListener('click', function (e) {
+                    resetCssClasses(e)
+                    console.log("sas")
+                    const before = moment().subtract(6, 'month').format('D MMM YYYY');
+                    const now = moment().format('D MMM YYYY');
+                    kassa_kirim.zoomX(
+                        new Date(before).getTime(),
+                        new Date(now).getTime()
+                    )
+                })
+
+            document
+                .querySelector('#one_year')
+                .addEventListener('click', function (e) {
+                    resetCssClasses(e)
+
+                    const before = moment().subtract(1, 'year').format('D MMM YYYY');
+                    const now = moment().format('D MMM YYYY');
+                    kassa_kirim.zoomX(
+                        new Date(before).getTime(),
+                        new Date(now).getTime()
+                    )
+                })
+
+        // kassa_chiqim start
+        var optionsa = {
+            series: [{
+                name: "So'm",
+                data: {{ daily_total_sum_outcomes }}
+            }, {
+                name: "Dollar",
+                data: {{daily_total_dollar_outcomes}}
+            }, {
+                name: "Pul o'tkazmalar",
+                data: {{ daily_total_transfer_outcomes }}
+            }, {
+                name: "Plastik",
+                data: {{ daily_total_card_outcomes }}
+            }
+            ],
+            chart: {
+                foreColor: 'rgba(255, 255, 255, 0.65)',
+                type: 'area',
+                height: 273,
+                toolbar: {
+                    show: true
+                },
+                zoom: {
+                    enabled: true,
+                    type: 'x',
+                    autoScaleYaxis: false,
+                    zoomedArea: {
+                        fill: {
+                            color: '#90CAF9',
+                            opacity: 0.4
+                        },
+                        stroke: {
+                            color: '#0D47A1',
+                            opacity: 0.4,
+                            width: 1
+                        }
+                    }
+                },
+                dropShadow: {
+                    enabled: false,
+                    top: 3,
+                    left: 14,
+                    blur: 4,
+                    opacity: 0.10,
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left',
+                offsetX: -25
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 3,
+                curve: 'smooth'
+            },
+            tooltip: {
+                theme: 'dark',
+                y: {
+                    formatter: function (val) {
+                        return "$ " + val + " "
+                    }
+                }
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    gradientToColors: ['#fff', '#fff', '#fff', '#fff'],
+                    shadeIntensity: 1,
+                    type: 'vertical',
+                    inverseColors: false,
+                    opacityFrom: 0.4,
+                    opacityTo: 0.1,
+                    //stops: [0, 50, 65, 91]
+                },
+            },
+            grid: {
+                show: true,
+                borderColor: 'rg["red", "green", "yellow", "blue"],ba(255, 255, 255, 0.12)',
+                strokeDashArray: 5,
+            },
+            colors: ["red", "green", "yellow", "blue"],
+            yaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return value + "$";
+                    }
+                },
+            },
+            xaxis: {
+                 type: 'datetime',
+                categories: {{ date|safe }},
+                tickAmount: 6,
+                    labels: {
+                        datetimeFormatter: {
+                            year: 'yyyy',
+                            month: 'MMM \'yy',
+                            day: 'dd MMM',
+                            hour: 'HH:mm'
+                        }
+                    }
+
+            }
+        };
+        var kassa_chiqim = new ApexCharts(document.querySelector("#kassa_chiqim"), optionsa);
+        kassa_chiqim.render();
+
+
+            document
+                .querySelector('#ten_days_kassa_chiqim')
+                .addEventListener('click', function (e)
+                {
+                    resetCssClasses(e)
+
+                    const before = moment().subtract(10, 'days').format('D MMM YYYY');
+                    const now = moment().format('D MMM YYYY');
+                    kassa_chiqim.zoomX(
+                        new Date(before).getTime(),
+                        new Date(now).getTime()
+                    )
+                })
+
+            document
+                .querySelector('#one_month_kassa_chiqim')
+                .addEventListener('click', function (e)
+                {
+                    resetCssClasses(e)
+
+                    const before = moment().subtract(1, 'month').format('D MMM YYYY');
+                    const now = moment().format('D MMM YYYY');
+                    kassa_chiqim.zoomX(
+                        new Date(before).getTime(),
+                        new Date(now).getTime()
+                    )
+                })
+
+            document
+                .querySelector('#six_months_kassa_chiqim')
+                .addEventListener('click', function (e)
+                {
+                    resetCssClasses(e)
+                    console.log("sas")
+                    const before = moment().subtract(6, 'month').format('D MMM YYYY');
+                    const now = moment().format('D MMM YYYY');
+                    kassa_chiqim.zoomX(
+                        new Date(before).getTime(),
+                        new Date(now).getTime()
+                    )
+                })
+
+            document
+                .querySelector('#one_year_kassa_chiqim')
+                .addEventListener('click', function (e)
+                {
+                    resetCssClasses(e)
+
+                    const before = moment().subtract(1, 'year').format('D MMM YYYY');
+                    const now = moment().format('D MMM YYYY');
+                    kassa_chiqim.zoomX(
+                        new Date(before).getTime(),
+                        new Date(now).getTime()
+                    )
+                })
+
+        // kassa_chiqim end
+    </script>
+    {#	<script src="{% static 'director/js/kassa.js' %}"></script>#}
+{% endblock %}

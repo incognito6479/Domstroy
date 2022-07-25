@@ -1,0 +1,148 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Faktura{% endblock %}
+
+
+{% block css %}
+    <link href="{% static 'provider/assets/plugins/datatable/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'provider/assets/plugins/datatable/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block content %}
+    <div class="page-breadcrumb d-none d-md-flex align-items-center mb-3">
+						<div class="pl-3">
+							<nav aria-label="breadcrumb">
+								<ol class="breadcrumb mb-0 p-0">
+									<li class="breadcrumb-item"><a href="javascript:;"><i class='bx bx-home-alt'></i></a>
+									</li>
+									<li class="breadcrumb-item active" aria-current="page"><a href="#">Faktura</a></li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+    <!--end breadcrumb-->
+    <div class="card">
+        <div class="card-body">
+            <div class="filiallar mb-3">
+                {% comment %}<div class="faktura_search">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#filialgabuyurtma">Filialga buyurtma</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="filialgabuyurtma" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Buyurtma</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">	<span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group select2-sm">
+                                        <h6>Buyurtma nomi</h6>
+                                        <section class="single-select">
+                                            <option value="Andijon">Andijon</option>
+                                            <option value="Farg'ona">Farg'ona</option>
+                                            <option value="Namangan">Namangan</option>
+                                            <option value="Toshkent">Toshkent</option>
+                                        </section>
+                                    </div>
+                                    <div class="form-group select2-sm">
+                                        <h6>Yetkazib beruvchi</h6>
+                                        <section class="single-select">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </section>
+                                    </div>
+                                    <div class="form-group select2-sm">
+                                        <h6>Filial nomi</h6>
+                                        <section class="single-select">
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </section>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6>Buyurtma kelish vaqti</h6>
+                                        <input type="text" class="form-control form-control-sm datepicker" placeholder="Sanani Belgiling"/>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">Bekor qilish</button>
+                                    <button type="button" class="btn btn-light">Buyurtma Berish</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>{% endcomment %}
+                <div class="tovar_exel"></div>
+            </div>
+            <div class="table-responsive faktura">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Maxsulot nomi</th>
+                            <th>Yetkazib beruvchi</th>
+                            <th>Ishlab chiqaruvchi</th>
+                            <th>Status</th>
+                            <th>O'lchovi</th>
+                            <th>Soni</th>
+                            <th>Narxi so'm/$</th>
+                            <th>Sotish narxi so'm/$</th>
+                            <th>Shtrix kod</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                    {% for invoice_item in invoice_items %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ invoice_item.product.name }}</td>
+                            <td>{{ invoice_item.invoice.deliver.name }}</td>
+                            <td>{{ invoice_item.product.producer.name }}</td>
+                            <td>{{ invoice_item.invoice.status }}</td>
+                            <td>{{ invoice_item.product.measurement }}</td>
+                            <td>{{ invoice_item.amount }}</td>
+                            <td><span data-value="kelish_som"></span>{{ invoice_item.product.cost|intcomma }} {% if invoice_item.product.currency == 'sum' %}So'm{% else %}${% endif %}</td>
+                            <td><span data-value="sotish_som"></span>{{ invoice_item.selling_price|intcomma }} {% if invoice_item.product.currency == 'sum' %}So'm{% else %}${% endif %}</td>
+                            <td>{{ invoice_item.product.barcode }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Jami: <p>{{ invoice_items_cost_dollar|intcomma }}$</p><p>{{ invoice_items_cost_sum|intcomma }}so'm</p></td>
+                        <td>Jami: <span class="sotish_narxi_som"></span>{{ invoice_items_selling_price|intcomma }} so'm</td>
+                        <td></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+        <script src="{% static 'provider/assets/plugins/datatable/js/jquery.dataTables.min.js' %}"></script>
+	    <script src="{% static 'provider/assets/plugins/edittable/bstable.js' %}"></script>
+	<script>
+		$(document).ready(function () {
+			//Default data table
+			var table = $('#example').DataTable({
+				buttons: ['excel']
+			});
+			table.buttons().container().appendTo('.tovar_exel');
+		})
+	</script>
+{% endblock %}
